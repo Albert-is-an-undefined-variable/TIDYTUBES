@@ -8,7 +8,7 @@ $errors = array();
 $samplename = $celltype = $idfreezer = $rack = $position = $amount = $frozendate = $availability = '';
 $errors_registration = array('username' => '', 'email' => '', 'password_1' => '', 'password_2' => '');
 // connect to the database
-$db = mysqli_connect('localhost', 'albert', '/Puiyuaru1616', 'mydb');
+$db = mysqli_connect('localhost', 'tidytubes', 'Welcome123%', 'mydb');
 
 // REGISTER USER
 if (isset($_POST['reg_user'])) {
@@ -45,7 +45,7 @@ if (isset($_POST['reg_user'])) {
     }
   }
 
-  // Finally, register user if there are no errors in the form
+  // Finally, REGISTER user if there are no errors in the form
   if(array_filter($errors_registration)){
 
   } else {
@@ -54,9 +54,12 @@ if (isset($_POST['reg_user'])) {
 
   	$query = "INSERT INTO User (Username, Email, Password)
   			  VALUES('$username', '$email', '$password')";
-  	mysqli_query($db, $query);
+  	mysqli_query($db, $query) or die(mysqli_error($db));
+    $query = "SELECT * FROM User WHERE Username='$username' ";
+    $results = mysqli_query($db, $query);
   	$_SESSION['username'] = $username;
   	$_SESSION['success'] = "You are now logged in";
+    $_SESSION['userdata'] = mysqli_fetch_assoc($results);
   	header('location: index.php');
   }
 }
@@ -85,6 +88,7 @@ if (isset($_POST['login_user'])) {
   	if (mysqli_num_rows($results) == 1) {
   	  $_SESSION['username'] = $username;
   	  $_SESSION['success'] = "You are now logged in";
+      $_SESSION['userdata'] = mysqli_fetch_assoc($results);
   	  header('location: index.php');
   	}else {
   		$errors_registration['password_1'] = "Wrong username/password combination";
@@ -118,9 +122,10 @@ if (isset($_POST['reg_entry'])) {
 
   // Finally, add the new entry in the sample table
   if (count($errors) == 0) {
-  	$query = "INSERT INTO Sample (Name, Cell_type, Rack, Position, Frozendate, Availability, Comment, User_Email)
-  			  VALUES('$samplename', '$celltype', '$rack', '$position', '$frozendate', '$availability', '$comment', '$email')";
-  	mysqli_query($db, $query);
+  	$query = "INSERT INTO Sample (Name, Cell_type, Rack, Position, Frozendate, Availability, Comment, idUser)
+  			  VALUES('$samplename', '$celltype', '$rack', '$position', '$frozendate', '$availability', '$comment','".$_SESSION["userdata"]["idUser"]."')";
+    print($query);
+    mysqli_query($db, $query) or die(mysqli_error($db));
 
   }
 }

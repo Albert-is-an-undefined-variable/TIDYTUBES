@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>New Entry</title>
+	<title>New Search</title>
 	<link rel="shortcut icon" href="img/tube.png">
 	<link rel="stylesheet" type="text/css" href="index.css">
 		<!-- <link rel="stylesheet" type="text/css" href="estilo.css"> -->
@@ -73,7 +73,7 @@
  <?php
  if (isset($_POST['reg_entry'])) {
  $search_value=$_POST["search"];
- $con=new mysqli("localhost","root","welcome123","registration");
+ $con=new mysqli("localhost","tidytubes","Welcome123%","mydb");
  if($con->connect_error){
      echo 'Connection Faild: '.$con->connect_error;
      }else{
@@ -81,7 +81,7 @@
 
          $res=$con->query($sql);
 
-         while($row=$res->fetch_assoc()){
+         while($row=$res->mysqli_fetch_assoc()){
              echo 'Samplename:  '.$row["idfreezer"];
 
 
