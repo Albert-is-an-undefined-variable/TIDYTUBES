@@ -1,3 +1,5 @@
+<?php include('server.php') ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,41 +53,21 @@
    <div class="hero">
      <div class="jumbotron text-center" style="margin-bottom: 0px;">
          <h1>New Search</h1>
-         <p>Give us some hints and we're going to find what you need</p>
+         <p>Can't find your cells? I bet, we can!</p>
      </div>
      <form action="search.php" method="post">
        <div class="input-group">
          <label>Sample name: </label>
-         <input type="text" name="search" value="">
+         <input type="text" name="Name" value="">
        </div>
+       <!-- <div class="input-group">
+         <label>Rack: </label>
+				 <input type="text" name="Rack" value="">
+       </div> -->
        <div class="input-group">
-         <label>Choose a freezer: </label>
-
-       </div>
-       <div class="input-group">
-   	  	<button type="submit" class="btn" name="reg_entry">search</button>
+   	  	<button type="submit" class="btn" name="reg_search">search</button>
    		</div>
 
 </form>
  </body>
  </html>
-
- <?php
- if (isset($_POST['reg_entry'])) {
- $search_value=$_POST["search"];
- $con=new mysqli("localhost","tidytubes","Welcome123%","mydb");
- if($con->connect_error){
-     echo 'Connection Faild: '.$con->connect_error;
-     }else{
-         $sql="select * from sample where samplename like '%$search_value%'";
-
-         $res=$con->query($sql);
-
-         while($row=$res->mysqli_fetch_assoc()){
-             echo 'Samplename:  '.$row["idfreezer"];
-
-
-             }
-
-         }}
- ?>
