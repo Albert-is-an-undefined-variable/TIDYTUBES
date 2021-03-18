@@ -60,10 +60,10 @@
          <label>Sample name: </label>
          <input type="text" name="Name" value="">
        </div>
-       <!-- <div class="input-group">
-         <label>Rack: </label>
+       <div class="input-group">
+         <label>Ra: </label>
 				 <input type="text" name="Rack" value="">
-       </div> -->
+       </div>
        <div class="input-group">
    	  	<button type="submit" class="btn" name="reg_search">search</button>
    		</div>
