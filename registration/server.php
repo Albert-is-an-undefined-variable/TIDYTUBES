@@ -134,53 +134,45 @@ if (isset($_POST['reg_entry'])) {
 // NEW SEARCH
 
 if (isset($_POST['reg_search'])) {
-  print("MAKE A NEW SEARCH:\n");
-  print("MAKE A NEW SEARCH:\n");
-  print("MAKE A NEW SEARCH:\n");
-  print("MAKE A NEW SEARCH:\n");
-    // // array for the fields of advanced search
-    //   $fields = array('Name','Rack');
-    //   $conditions = array();
-    //     foreach ($fields as $field){
-    //          if(isset($_POST[$field]) && $_POST[$field] != ''){
-    //            //echo"$field";
-    //           $conditions[] = " $field LIKE '%" . mysqli_real_escape_string($db,$_POST[$field]) . "%'";
-    //         }};
-    //           $query="SELECT * FROM Sample";
-    //
-    //          if(count($conditions) > 0) {
-    //             // append the conditions
-    //             $query .= " WHERE " . implode (' OR ', $conditions); // you can change to 'OR', but I suggest to apply the filters cumulative
-    //           }
-    //           print($query);
-    //           mysqli_query($db, $query) or die(mysqli_error($db));
-            }
+  $sql = "SELECT Name FROM Sample";
+  $result = mysqli_query($db, $sql);
 
-//
-// if (isset($_POST['reg_search'])) {
-//   $search_value = mysqli_real_escape_string($db, $_POST['Name']);
-//
-//     $sql = "SELECT * FROM Sample where Name like '%$search_value%'";
-//     $result = mysqli_query($db,$sql);
-//     $row = mysqli_fetch_assoc($result);
-//     echo $row["Name"] . " " . $row["Name"] . "<br>";
-//     echo $sql;
-//     mysqli_query($db, $sql) or die(mysqli_error($db));
+  if (mysqli_num_rows($result) > 0) {
+    // output data of each row
+    echo "<table><tr><th>Sample Name</th><th>Add other features here later</th></tr>";
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+      echo "<tr><td>".$row["Name"]."</td><td>"."This is lili's dummy"."</td></tr>";
+    }
+    echo "</table>";
 
+  } else {
+    echo "0 results";
+  }
+  // empty results
+  $result = $free_result();
+
+
+// PRINT ALL ENTRIES OF A TABLE
+
+// LILI : THIS IS CODE THAT WILL PRINT YOU ALL ENTRIES IN THE TABLE "SAMPLE"
+  // if (isset($_POST['reg_search'])) {
+  //   $sql = "SELECT Name FROM Sample";
+  //   $result = mysqli_query($db, $sql);
   //
+  //   if (mysqli_num_rows($result) > 0) {
+  //     // output data of each row
+  //     echo "<table><tr><th>Sample Name</th><th>Add other features here later</th></tr>";
+  //     // output data of each row
+  //     while($row = $result->fetch_assoc()) {
+  //       echo "<tr><td>".$row["Name"]."</td><td>"."This is lili's dummy"."</td></tr>";
+  //     }
+  //     echo "</table>";
   //
-  // $query="select * from Sample where Name like '%$search_value%'";
-  //
-  // $res = $db -> query($query) or die(mysqli_error($db));
-  // if ($res->num_rows <= 1) {
-  //   echo"trying. smaller <= 1";
-  //
-  //   while($row=$res->mysqli_fetch_assoc($res))
-  //   {
-  //     echo 'Name:  '.$row["Name"];
-  //     mysqli_query($db, $query) or die(mysqli_error($db));
+  //   } else {
+  //     echo "0 results";
   //   }
-  //}
+  //   // empty results
+  //   $result = $free_result();
 
-//}
 ?>
