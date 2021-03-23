@@ -1,5 +1,6 @@
 <?php include('server.php')?>
 <?php
+# WEB PAGE FOR AVANCED SEARCH IN DATABASE
 if(!isset($_SESSION)) {
 				session_start();
 }

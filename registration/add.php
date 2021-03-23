@@ -1,5 +1,7 @@
 <?php
 
+// Php script for errors in sign-in process
+
 $email = $user = $password = $pswr = '';
 $errors = array('email' => '' , 'user' => '' , 'password' => '', 'pswr' => '' );
 
@@ -26,7 +28,7 @@ if(isset($_POST['submit'])){
     } else {
         $password = $_POST['password'];
         if(strlen($password) <= 7 ){
-            $errors['password'] = 'Your must have at least 8 characters';
+            $errors['password'] = 'Your password must have at least 8 characters';
             }
     }
 
