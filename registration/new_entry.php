@@ -1,54 +1,50 @@
-<?php include('server.php') ?>
+<?php
+
+include('server.php');
+
+// NEW ENTRY
+if (isset($_POST['reg_entry'])) {
+  // receive all input values from the entry form
+  $samplename = mysqli_real_escape_string($db, $_POST['samplename']);
+  $celltype = mysqli_real_escape_string($db, $_POST['celltype']);
+  // $idfreezer = mysqli_real_escape_string($db, $_POST['idfreezer']);
+  $rack = mysqli_real_escape_string($db, $_POST['rack']);
+  $position = mysqli_real_escape_string($db, $_POST['position']);
+  // $amount = mysqli_real_escape_string($db, $_POST['amount']);
+  $frozendate = mysqli_real_escape_string($db, $_POST['frozendate']);
+  $availability = mysqli_real_escape_string($db, $_POST['availability']);
+  $comment = mysqli_real_escape_string($db, $_POST['comment']);
+
+  // entry validation: ensure that the form is correctly filled ...
+  // by adding (array_push()) corresponding error unto $errors array
+  if (empty($samplename)) { array_push($errors, "Sample name is required"); }
+  if (empty($celltype)) { array_push($errors, "Cell type is required"); }
+  // if (empty($idfreezer)) { array_push($errors, "Freezer is required"); }
+  if (empty($rack)) { array_push($errors, "Rack is required"); }
+  if (empty($position)) { array_push($errors, "Position is required"); }
+  // if (empty($amount)) { array_push($errors, "Amount is required"); }
+  if (empty($frozendate)) { array_push($errors, "Frozen date is required"); }
+
+  // Finally, add the new entry in the sample table
+  if (count($errors) == 0) {
+  	$query = "INSERT INTO Sample (Name, Cell_type, Rack, Position, Frozendate, Availability, Comment, idUser)
+  			  VALUES('$samplename', '$celltype', '$rack', '$position', '$frozendate', '$availability', '$comment','".$_SESSION["userdata"]["idUser"]."')";
+    print($query);
+    mysqli_query($db, $query) or die(mysqli_error($db));
+
+  }
+}
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>New Entry</title>
-	<link rel="shortcut icon" href="img/tube.png">
-	<link rel="stylesheet" type="text/css" href="index.css">
-		<!-- <link rel="stylesheet" type="text/css" href="estilo.css"> -->
 
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<!-- navigation bar -->
-	<nav class="navbar navbar-default navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="index.php">Tidy tubes</a>
-			</div>
-			<div class="collapse navbar-collapse" id="myNavbar">
-				<ul class="nav navbar-nav navbar-right">
-						<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown" data-target="dropdown_target" href="">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
-										<path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-							</svg>
-							<span class="num">4</span>
-							<span class="caret"></span> </a>
-					<div class="dropdown-menu" aria-labelledby="dropdown_target">
-								<a class "dropdown-item" href="#"></a> <br>
-							<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown" data-target="dropdown_target" href="">MY PROFILE
-							<span class="caret"></span> </a>
-						<div class="dropdown-menu" aria-labelledby="dropdown_target">
-								<a class "dropdown-item" href="#">Setings</a> <br>
-								<a class "dropdown-item" href="index.php?logout='1'" style="color: red;">Log Out</a>
-						</div>
-						</li>
-						<li><a href="#services">NEW ENTRY</a></li>
-						<li><a href=search.php>SEARCH</a></li>
-						<li><a href="request.php">REQUESTS</a></li>
-						<li><a href="contact.html">CONTACT US!</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	 </nav>
+	<?php include('header.html') ?>
+
+
 
         <div class="hero">
 					<div class="jumbotron text-center" style="margin-bottom: 0px;">
@@ -132,5 +128,10 @@
 				<strong>Semi-privat:</strong> Others have to ask permission<br>
 				<strong>Public:</strong> Everyone may access the entry</p>
 		</div>
+
+        <?php include('footer.html') ?>
+
+  </div>
+
 </body>
 </html>
