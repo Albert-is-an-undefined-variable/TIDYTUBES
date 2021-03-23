@@ -109,6 +109,8 @@ if (isset($_POST['reg_entry'])) {
   $frozendate = mysqli_real_escape_string($db, $_POST['frozendate']);
   $availability = mysqli_real_escape_string($db, $_POST['availability']);
   $comment = mysqli_real_escape_string($db, $_POST['comment']);
+  $Storage = mysqli_real_escape_string($db, $_POST['Storage']);
+
 
   // entry validation: ensure that the form is correctly filled ...
   // by adding (array_push()) corresponding error unto $errors array
@@ -122,8 +124,8 @@ if (isset($_POST['reg_entry'])) {
 
   // Finally, add the new entry in the sample table
   if (count($errors) == 0) {
-  	$query = "INSERT INTO Sample (Name, Cell_type, Rack, Position, Frozendate, Availability, Comment, idUser)
-  			  VALUES('$samplename', '$celltype', '$rack', '$position', '$frozendate', '$availability', '$comment','".$_SESSION["userdata"]["idUser"]."')";
+  	$query = "INSERT INTO Sample (Name, Cell_type, Rack, Position, Frozendate, Availability, Comment, idUser, Storage)
+  			  VALUES('$samplename', '$celltype', '$rack', '$position', '$frozendate', '$availability', '$comment','$Storage','".$_SESSION["userdata"]["idUser"]."')";
     print($query);
     mysqli_query($db, $query) or die(mysqli_error($db));
 
@@ -211,6 +213,22 @@ if (isset($_POST['reg_entry'])) {
 
        }
      }
+
+if (isset($_POST['reg_storage'])) {
+  #print_r("<br><br><br><br><br><br>");
+  #printf("INSIDE STORAGE");
+  $Location = mysqli_real_escape_string($db, $_POST['Location']);
+  print($Location);
+  if (empty($Location)) { array_push($errors, "ID storage is required"); }
+  if (count($errors) == 0) {
+  	$query = "INSERT INTO Storage (Location)
+  			  VALUES ('$Location')";
+        }
+        #print($query);
+        mysqli_query($db, $query) or die(mysqli_error($db));
+
+      }
+
 
 
 // ----------------------------------------------------------------------------------------//
