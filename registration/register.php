@@ -1,4 +1,60 @@
-<?php include('server.php') ?>
+<?php include('server.php');
+
+// REGISTER USER
+if (isset($_POST['reg_user'])) {
+  // receive all input values from the form
+  $username = mysqli_real_escape_string($db, $_POST['username']);
+  $email = mysqli_real_escape_string($db, $_POST['email']);
+  $password_1 = mysqli_real_escape_string($db, $_POST['password_1']);
+  $password_2 = mysqli_real_escape_string($db, $_POST['password_2']);
+
+  // form validation: ensure that the form is correctly filled ...
+  // by adding (array_push()) corresponding error unto $errors array
+  if (empty($username)) { $errors_registration['username'] = "Username is required"; }
+  else { if (!preg_match('/^[a-zA-Z\s]+$/', $username)){ $errors_registration['username'] = "Your user name cannot contain special characters"; }}
+  if (empty($email)) { $errors_registration['email'] = "Email is required"; }
+  // if (empty($password_1)) { array_push($errors, "Password is required"); }
+  else { if (strlen($password_1) <= 8 ){ $errors_registration['password_1'] = "Your password must have at least 8 characters"; }}
+  if ($password_1 != $password_2) {
+    $errors_registration['password_2'] = "The two passwords do not match";
+  }
+
+  // first check the database to make sure
+  // a user does not already exist with the same username and/or email
+  $user_check_query = "SELECT * FROM User WHERE Username='$username' OR Email='$email' LIMIT 1";
+  $result = mysqli_query($db, $user_check_query);
+  $user = mysqli_fetch_assoc($result);
+
+  if ($user) { // if user exists
+    if ($user['Username'] === $username) {
+      $errors_registration['username'] = "Username already exists";
+    }
+
+    if ($user['Email'] === $email) {
+      $errors_registration['email'] = "email already exists";
+    }
+  }
+
+  // Finally, REGISTER user if there are no errors in the form
+  if(array_filter($errors_registration)){
+
+  } else {
+
+  	$password = md5($password_1);//encrypt the password before saving in the database
+
+  	$query = "INSERT INTO User (Username, Email, Password)
+  			  VALUES('$username', '$email', '$password')";
+  	mysqli_query($db, $query) or die(mysqli_error($db));
+    $query = "SELECT * FROM User WHERE Username='$username' ";
+    $results = mysqli_query($db, $query);
+  	$_SESSION['username'] = $username;
+  	$_SESSION['success'] = "You are now logged in";
+    $_SESSION['userdata'] = mysqli_fetch_assoc($results);
+  	header('location: index.php');
+  }
+}
+
+?>
 
 <!DOCTYPE html>
 <html>
@@ -14,6 +70,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 </head>
 <body>
+    <?php include('header.html') ?>
+
+
     <!-- <div class="container_menu-bar">
         <nav class="navbar navbar-default navbar-fixed-top">
     		<div class="container">

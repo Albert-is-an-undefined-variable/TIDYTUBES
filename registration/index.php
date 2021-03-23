@@ -1,34 +1,22 @@
-<?php include('server.php')?>
-<?php
+<?php include('server.php');
+
   if(!isset($_SESSION)) {
-          session_start();
+      session_start();
   }
   if (!isset($_SESSION['username'])) {
-  	$_SESSION['msg'] = "You must log in first";
-  	header('location: login.php');
+  	  $_SESSION['msg'] = "You must log in first";
+  	  header('location: login.php');
   }
   if (isset($_GET['logout'])) {
-  	session_destroy();
-  	unset($_SESSION['username']);
-  	header("location: login.php");
+      session_unset();
+  	  session_destroy();
+  	  header("location: login.php");
   }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Home</title>
-	<link rel="stylesheet" type="text/css" href="index.css">
-    <!-- <link rel="stylesheet" type="text/css" href="estilo.css"> -->
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <!-- jquery -->
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    CSS
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    JS
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script> -->
 </head>
 <body>
     <div class="jumbotron text-center" style="margin-bottom: 0px;">
@@ -44,43 +32,7 @@
         </form>
     </div>
 
-    <!-- navigation bar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.php">Tidy tubes</a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-          <ul class="nav navbar-nav navbar-right">
-              <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown" data-target="dropdown_target" href="">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
-                      <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-                </svg>
-                <span class="num">4</span>
-                <span class="caret"></span> </a>
-            <div class="dropdown-menu" aria-labelledby="dropdown_target">
-                  <a class "dropdown-item" href="#"></a> <br>
-                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown" data-target="dropdown_target" href="">MY PROFILE
-                <span class="caret"></span> </a>
-              <div class="dropdown-menu" aria-labelledby="dropdown_target">
-                  <a class "dropdown-item" href="#">Setings</a> <br>
-                  <a class "dropdown-item" href="index.php?logout='1'" style="color: red;">Log Out</a>
-              </div>
-              </li>
-              <li><a href=new_entry.php>NEW ENTRY</a></li>
-              <li><a href=search.php>SEARCH</a></li>
-              <li><a href="#pricing">REQUESTS</a></li>
-              <li><a href="contact.html">CONTACT US!</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-     </nav>
+<?php include('header.html') ?>
 
 
 <h2>What our customers say</h2>
@@ -223,13 +175,9 @@
                       </div>
                       <br>
                       <br>
-                      <!-- footer -->
-               <footer class="container-fluid text-center">
-                 <a href="#myPage" title="To Top">
-                   <span class="glyphicon glyphicon-chevron-up"></span>
-                 </a>
-                 <p>Did you have any problem, or found any bug? Do not hesitate and contact us <a href="contact.html" title="here">here</a></p>
-               </footer>
+
+                      <?php include('footer.html') ?>
+
   </div>
 </body>
 </html>

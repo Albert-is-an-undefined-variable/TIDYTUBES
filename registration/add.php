@@ -49,6 +49,8 @@ if(isset($_POST['submit'])){
     }
 }
 ?>
+<?php include('header.html') ?>
+
 
  <!DOCTYPE html>
  <html lang="en" dir="ltr">

@@ -1,4 +1,38 @@
-    <?php include('server.php') ?>
+<?php include('server.php');
+
+// LOGIN USER
+if (isset($_POST['login_user'])) {
+  $username = mysqli_real_escape_string($db, $_POST['username']);
+  $password = mysqli_real_escape_string($db, $_POST['password_1']);
+
+  if (empty($username)) {
+  	$errors_registration['username'] = "Username is required";
+  }
+  if (empty($password)) {
+  	$errors_registration['password_1'] = "Password is required";
+  }
+
+  // Finally, register user if there are no errors in the form
+  if(array_filter($errors_registration)){
+
+  } else {
+
+  	$password = md5($password);
+  	$query = "SELECT * FROM User WHERE Username='$username' AND Password='$password'";
+  	$results = mysqli_query($db, $query);
+  	if (mysqli_num_rows($results) == 1) {
+  	  $_SESSION['username'] = $username;
+  	  $_SESSION['success'] = "You are now logged in";
+      $_SESSION['userdata'] = mysqli_fetch_assoc($results);
+  	  header('location: index.php');
+  	}else {
+  		$errors_registration['password_1'] = "Wrong username/password combination";
+  	}
+  }
+}
+
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +47,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 </head>
 <body>
+
 
 
 <!-- login -->
