@@ -7,10 +7,10 @@ if (isset($_POST['reg_entry'])) {
   // receive all input values from the entry form
   $samplename = mysqli_real_escape_string($db, $_POST['samplename']);
   $celltype = mysqli_real_escape_string($db, $_POST['celltype']);
-  // $idfreezer = mysqli_real_escape_string($db, $_POST['idfreezer']);
+  $location = mysqli_real_escape_string($db, $_POST['Location']);
   $rack = mysqli_real_escape_string($db, $_POST['rack']);
   $position = mysqli_real_escape_string($db, $_POST['position']);
-  // $amount = mysqli_real_escape_string($db, $_POST['amount']);
+  $amount = mysqli_real_escape_string($db, $_POST['amount']);
   $frozendate = mysqli_real_escape_string($db, $_POST['frozendate']);
   $availability = mysqli_real_escape_string($db, $_POST['availability']);
   $comment = mysqli_real_escape_string($db, $_POST['comment']);
@@ -27,8 +27,8 @@ if (isset($_POST['reg_entry'])) {
 
   // Finally, add the new entry in the sample table
   if (count($errors) == 0) {
-  	$query = "INSERT INTO Sample (Name, Cell_type, Rack, Position, Frozendate, Availability, Comment, idUser)
-  			  VALUES('$samplename', '$celltype', '$rack', '$position', '$frozendate', '$availability', '$comment','".$_SESSION["userdata"]["idUser"]."')";
+  	$query = "INSERT INTO Sample (Name, Cell_type, Rack, Position, Frozendate, Amount, Availability, Comment, idUser)
+  			  VALUES('$samplename', '$celltype', '$rack', '$position', '$frozendate', '$amount', '$availability', '$comment','".$_SESSION["userdata"]["idUser"]."')";
     print($query);
     mysqli_query($db, $query) or die(mysqli_error($db));
 
@@ -44,13 +44,12 @@ if (isset($_POST['reg_entry'])) {
 <body>
 	<?php include('header.html') ?>
 
-
-
         <div class="hero">
 					<div class="jumbotron text-center" style="margin-bottom: 0px;">
 		          <h1>New Entry</h1>
 		          <p>Add your tubes to the system, before you forget where you put them!</p>
 		      </div>
+
 					<div class="container">
 						<form method="post" action="new_entry.php">
 							<?php include('error.php'); ?>
@@ -59,10 +58,12 @@ if (isset($_POST['reg_entry'])) {
 								<label>Sample name:</label>
 								<input type="text" name="samplename" value="<?php echo $samplename; ?>">
 							</div>
+
 							<div class="input-group">
 								<label>Cell Type:</label>
 								<input type="text" name="celltype" value="<?php echo $celltype; ?>">
 							</div>
+
 							<button type="button" class="btn" data-toggle="modal" data-target="#myModal">Add Storage</button>
 					      <div id="myModal" class="modal fade" role="dialog">
 					            <div class="modal-dialog">
@@ -73,25 +74,33 @@ if (isset($_POST['reg_entry'])) {
 					                  <h5 class="modal-title">Add storage</h5>
 					                </div>
 					                <div class="modal-body">
-					                  <input type="text" name="Location" value="<?php echo $Location; ?>">
+					                  <input type="text" name="Location" value="<?php echo $location; ?>">
 					                  <button type="submit" class="btn" name="reg_storage">Add</button>
 					                </div>
 					              </div>
 					            </div>
 					          </div>
+
 						<div class="input-group">
   	  				<label>Position:</label>
   	  				<input type="text" name="position" value="<?php echo $position; ?>">
   					</div>
-  					</div>
+
+            <div class="input-group">
+              <label>Rack:</label>
+              <input type="text" name="rack" value="<?php echo $rack; ?>">
+            </div>
+
 						<div class="input-group">
   	  				<label>Quantity of tubes:</label>
   	  				<input type="number" name="amount" value="<?php echo $amount; ?>">
   					</div>
+
 						<div class="input-group">
   	  				<label>Frozen on the: </label>
   	  				<input type="text" name="frozendate" value="<?php echo $frozendate; ?>">
   					</div>
+
 						<div class="input-group">
   	  				<label>Select the availability for your tubes</label>
 							<select name="availability">
@@ -100,25 +109,29 @@ if (isset($_POST['reg_entry'])) {
 								<option value="public">Public</option>
 							</select>
   				</div>
+
 					<div class="input-group">
   	  			<label>Add a note:</label>
 						<textarea input type="text" rows="10" cols="50" name="comment" value="<?php echo $comment; ?>">Protocol, genetically modified, project XY ...</textarea>
   			</div>
+
 				<div class="input-group">
-					<label for="Storage">Type</label>
-					<?php
-        $sql = "Select * from Storage";
-        $result = mysqli_query($db, $sql);
-				echo "<select name='unitid'>";
-        while ($row = mysqli_fetch_array($result)) {
-           echo "<option value='" .$row['idStorage']."'> ".$row['Location'] . "</option>";
-        }
-        echo "</select>";
- 					?>
-			</div>
-  		<div class="input-group">
-  	  	<button type="submit" class="btn" name="reg_entry">Add entry</button>
-  		</div>
+  				<label for="Storage">Type</label>
+  				<?php
+            $sql = "Select * from Storage";
+            $result = mysqli_query($db, $sql);
+    				echo "<select name='unitid'>";
+            while ($row = mysqli_fetch_array($result)) {
+               echo "<option value='" .$row['idStorage']."'> ".$row['Location'] . "</option>";
+            }
+            echo "</select>";
+     					?>
+  			</div>
+
+    		<div class="input-group">
+    	  	<button type="submit" class="btn" name="reg_entry">Add entry</button>
+    		</div>
+
   		</form>
   	</div>
 		<div class="container">

@@ -4,8 +4,9 @@ session_start();
 // initializing variables
 $username = "";
 $email    = "";
+$table =""; //result table for search
 $errors = array();
-$samplename = $celltype = $idfreezer = $rack = $position = $amount = $frozendate = $availability = '';
+$samplename = $celltype = $idfreezer = $rack = $position = $amount = $frozendate = $availability = $comment = $Location = '';
 $errors_registration = array('username' => '', 'email' => '', 'password_1' => '', 'password_2' => '');
 // connect to the database
 $db = mysqli_connect('localhost', 'tidytubes', 'Welcome123%', 'mydb');
@@ -65,43 +66,16 @@ $db = mysqli_connect('localhost', 'tidytubes', 'Welcome123%', 'mydb');
     //echo "</table>";
   //}
 
-  if (isset($_POST['reg_search'])) {
-    //print("HERE <br> HERE <br> HERE <br>HERE <br>HERE <br>HERE <br>");
-
-    $fields = array('Name','Rack');
-    #print($fields);
-    $conditions = array();
-
-   foreach ($fields as $field){
-      if(isset($_POST[$field]) && $_POST[$field] != ''){
-                  $conditions[] = "$field LIKE '%" . mysqli_real_escape_string($db,$_POST[$field]) . "%'";     }
-    }
-          $query="SELECT * FROM Sample";
-          if(count($conditions) > 0) {
-         // append the conditions
-         $query .= " WHERE " . implode (' OR ', $conditions); // you can change to 'OR', but I suggest to apply the filters cumulative
-         #printf("$query.\n");
-
-     }
-
-    $result = mysqli_query($db, $query);
-    while($row = mysqli_fetch_array($result))
-       {
-          print_r("<br><br><br><br><br><br>");
-          print_r($row);
-
-       }
-     }
 
 if (isset($_POST['reg_storage'])) {
   #print_r("<br><br><br><br><br><br>");
   #printf("INSIDE STORAGE");
-  $Location = mysqli_real_escape_string($db, $_POST['Location']);
-  print($Location);
-  if (empty($Location)) { array_push($errors, "ID storage is required"); }
+  $location = mysqli_real_escape_string($db, $_POST['Location']);
+  print($location);
+  if (empty($location)) { array_push($errors, "ID storage is required"); }
   if (count($errors) == 0) {
   	$query = "INSERT INTO Storage (Location)
-  			  VALUES ('$Location')";
+  			  VALUES ('$location')";
         }
         #print($query);
         mysqli_query($db, $query) or die(mysqli_error($db));
@@ -135,5 +109,4 @@ if (isset($_POST['reg_storage'])) {
   //   }
   //   // empty results
   //   $result = $free_result();
-
 ?>
