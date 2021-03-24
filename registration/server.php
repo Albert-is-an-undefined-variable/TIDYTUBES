@@ -80,6 +80,7 @@ if (isset($_POST['reg_storage'])) {
         #print($query);
         mysqli_query($db, $query) or die(mysqli_error($db));
 
+
       }
 
 
