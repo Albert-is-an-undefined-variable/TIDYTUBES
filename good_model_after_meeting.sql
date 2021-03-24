@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`User` (
   `Password` VARCHAR(45) NOT NULL,
   `Username` VARCHAR(45) NOT NULL,
   `Profile_image` VARCHAR(45) NULL,
-  `idUser` INT AUTO_INCREMENT NOT NULL,
+  `idUser` INT NOT NULL,
   PRIMARY KEY (`idUser`))
 ENGINE = InnoDB;
 
@@ -31,7 +31,7 @@ ENGINE = InnoDB;
 -- Table `mydb`.`Sample`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Sample` (
-  `idSample` INT AUTO_INCREMENT NOT NULL,
+  `idSample` INT NOT NULL,
   `Name` VARCHAR(45) NULL,
   `Cell_type` VARCHAR(45) NULL,
   `Frozendate` VARCHAR(45) NULL,
@@ -39,11 +39,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Sample` (
   `Comment` VARCHAR(300) NULL,
   `Position` VARCHAR(45) NULL,
   `Rack` VARCHAR(45) NULL,
-  `Amount` INT NULL,
-  `idUser` INT NOT NULL,
-  PRIMARY KEY (`idSample`),
-  CONSTRAINT `fk_Sample_User`
-    FOREIGN KEY (`idUser`)
+  `User_idUser` INT NOT NULL,
+  `User_idUser1` INT NOT NULL,
+  PRIMARY KEY (`idSample`, `User_idUser`),
+  INDEX `fk_Sample_User1_idx` (`User_idUser1` ASC) VISIBLE,
+  CONSTRAINT `fk_Sample_User1`
+    FOREIGN KEY (`User_idUser1`)
     REFERENCES `mydb`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -54,7 +55,7 @@ ENGINE = InnoDB;
 -- Table `mydb`.`role`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`role` (
-  `idrole` INT AUTO_INCREMENT NOT NULL,
+  `idrole` INT NOT NULL,
   PRIMARY KEY (`idrole`))
 ENGINE = InnoDB;
 
@@ -63,10 +64,11 @@ ENGINE = InnoDB;
 -- Table `mydb`.`role_has_User`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`role_has_User` (
-  `role_idrole` INT AUTO_INCREMENT NOT NULL,
+  `role_idrole` INT NOT NULL,
   `User_idUser` INT NOT NULL,
   PRIMARY KEY (`role_idrole`, `User_idUser`),
-  CONSTRAINT `fk_role_has_User_role`
+  INDEX `fk_role_has_User_role1_idx` (`role_idrole` ASC) VISIBLE,
+  CONSTRAINT `fk_role_has_User_role1`
     FOREIGN KEY (`role_idrole`)
     REFERENCES `mydb`.`role` (`idrole`)
     ON DELETE NO ACTION
@@ -78,7 +80,7 @@ ENGINE = InnoDB;
 -- Table `mydb`.`Storage`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Storage` (
-  `idStorage` INT AUTO_INCREMENT NOT NULL,
+  `idStorage` INT NOT NULL,
   `Location` VARCHAR(45) NULL,
   PRIMARY KEY (`idStorage`))
 ENGINE = InnoDB;
@@ -88,14 +90,13 @@ ENGINE = InnoDB;
 -- Table `mydb`.`Request`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Request` (
-  `idRequests` INT AUTO_INCREMENT NOT NULL,
+  `idRequests` INT NOT NULL,
   `Name` VARCHAR(45) NULL,
   `Cell_type` VARCHAR(45) NULL,
   `Date` VARCHAR(45) NULL,
   `Availability` VARCHAR(45) NULL,
   `Comment` VARCHAR(45) NULL,
   `Position` VARCHAR(45) NULL,
-  `Amount` INT NULL,
   PRIMARY KEY (`idRequests`))
 ENGINE = InnoDB;
 
@@ -104,7 +105,7 @@ ENGINE = InnoDB;
 -- Table `mydb`.`User_has_Request`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`User_has_Request` (
-  `User_idUser` INT AUTO_INCREMENT NOT NULL,
+  `User_idUser` INT NOT NULL,
   `Request_idRequests` INT NOT NULL,
   PRIMARY KEY (`User_idUser`, `Request_idRequests`),
   INDEX `fk_User_has_Request_Request1_idx` (`Request_idRequests` ASC) VISIBLE,

@@ -12,33 +12,8 @@
         <title></title>
     </head>
     <body>
-        <!-- navigation bar -->
-        <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.php">Tidy tubes</a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-          <ul class="nav navbar-nav navbar-right">
-            <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown" data-target="dropdown_target" href="">MY PROFILE
-            <span class="caret"></span> </a>
-        <div class="dropdown-menu" aria-labelledby="dropdown_target">
-            <a class "dropdown-item" href="#">Setings</a> <br>
-            <a class "dropdown-item" href="index.php?logout='1'" style="color: red;">Log Out</a>
-        </div>
-        </li>
-            <li><a href="#services">PROJECTS</a></li>
-            <li><a href="#pricing">REQUESTS</a></li>
-            <li><a href="contact.html">CONTACT US!</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+        
+        <?php include('header.html') ?>
 
             <!-- contacto -->
             <br>
@@ -79,6 +54,6 @@
       <div class="jumbotron text-center" style="margin-bottom: 0px;">
           <h2>Find us in our second home</h2>
       </div>
-      <img src="upf.jpg" style="width:100%">
+      <img src="img/upf.jpg" style="width:100%">
     </body>
 </html>

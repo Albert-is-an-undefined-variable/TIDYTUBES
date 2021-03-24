@@ -39,7 +39,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Sample` (
   `Comment` VARCHAR(300) NULL,
   `Position` VARCHAR(45) NULL,
   `Rack` VARCHAR(45) NULL,
-  `Amount` INT NULL,
   `idUser` INT NOT NULL,
   PRIMARY KEY (`idSample`),
   CONSTRAINT `fk_Sample_User`
@@ -95,7 +94,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Request` (
   `Availability` VARCHAR(45) NULL,
   `Comment` VARCHAR(45) NULL,
   `Position` VARCHAR(45) NULL,
-  `Amount` INT NULL,
   PRIMARY KEY (`idRequests`))
 ENGINE = InnoDB;
 
