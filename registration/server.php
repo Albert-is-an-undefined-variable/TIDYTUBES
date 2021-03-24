@@ -204,13 +204,24 @@ if (isset($_POST['reg_entry'])) {
      }
 
     $result = mysqli_query($db, $query);
-    while($row = mysqli_fetch_array($result))
+    while($row = mysqli_fetch_array($result)) // array holding the values from the selected rows
        {
-          print_r("<br><br><br><br><br><br>");
-          print_r($row);
+         $idSample = $row[1];
+         $Name = $row[2];
+         $Celltype = $row[3];
+         $Frozendate = $row[4];
+         $Availability = $row[5];
+         $Rack = $row[8];
+         $Position = $row[7];
+         $Comment = $row[6];
 
-       }
+         // for($x = 0; $x < 8; $x++) {
+          print_r("<br><br><br>");
+          print_r($row);
      }
+     echo '</table>';
+     print($query);
+    }
 
 
 // ----------------------------------------------------------------------------------------//
