@@ -5,7 +5,7 @@ include('server.php');
 // ADVANCED SEARCH
 if (isset($_POST['reg_search'])) {
 	//receive all input variables from the serach form
-	$samplename = mysqli_real_escape_string($db, $_POST['samplename']); //Cell2
+	$samplename = mysqli_real_escape_string($db, $_POST['samplename']);
 	$celltype = mysqli_real_escape_string($db, $_POST['celltype']);
 	// $location = mysqli_real_escape_string($db, $_POST['Location']);		########## STORAGE STILL MISSING !!!!!! #########
 	$rack = mysqli_real_escape_string($db, $_POST['rack']);
@@ -31,7 +31,8 @@ if (isset($_POST['reg_search'])) {
 	// print($query);
 
 	//search in db
-	$results = mysqli_query($db, $query)or print mysqli_error($mysqli);
+	$results = mysqli_query($db, $query) or die(mysqli_error($db));
+
 
 	if ($results->num_rows > 0) {
   	echo "<table style='width:100%'>
@@ -59,14 +60,15 @@ if (isset($_POST['reg_search'])) {
 			$table .= "<td>" . $row["Amount"] . "</td>";
 			$table .= "<td>" . $row["Availability"] . 		"</td>";
 			$table .= "<td>" . $row["Comment"] . 	"</td>";
-			$table .= "</tr>"; }
-		  $table .= "</table>";
-
+			$table .= "</tr>";
 		}
-		$table .= "</ol>";
-	} else {
-		echo "0 results";
+		$table .= "</table>";
+
 	}
+	$table .= "</ol>";
+} else {
+	echo "Something went wrong! Please try again";
+}
 //
 // 	// PRINT RESULTS
 // 	if ($results->num_rows > 0) {
@@ -93,7 +95,7 @@ if (isset($_POST['reg_search'])) {
 <!DOCTYPE html>
 <html>
 <head>
-	<title>New Search</title>
+	<title>Advanced Search</title>
 
 </head>
 <body>
@@ -101,7 +103,7 @@ if (isset($_POST['reg_search'])) {
 
   <div class="hero">
     <div class="jumbotron text-center" style="margin-bottom: 0px;">
-         <h1>New Search</h1>
+         <h1>Advanced Search</h1>
          <p>Can't find your cells? I bet, we can!</p>
     </div>
     <form method="post" action="search.php">
@@ -166,8 +168,8 @@ if (isset($_POST['reg_search'])) {
 			</div>
 
       <div class="input-group">
-   	  	<button type="submit" class="btn" name="reg_search">search</button>
-				<?php echo $table ?>
+   	  	<button type="submit" class="btn btn-success" name="reg_search">Search</button>
+				<?php echo $table ?> Num Hits: <?= mysqli_num_rows($results) ?>
    		</div>
 
 		</div>
