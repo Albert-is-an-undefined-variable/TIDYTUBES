@@ -4,7 +4,8 @@ session_start();
 // initializing variables
 $username = "";
 $email    = "";
-$table =""; //result table for search
+$table ="";       //result table for search
+$keyword = $searchword ="";  //for simple search on index page
 $errors = array();
 $samplename = $celltype = $idfreezer = $rack = $position = $amount = $frozendate = $availability = $comment = $Location = '';
 $errors_registration = array('username' => '', 'email' => '', 'password_1' => '', 'password_2' => '');
