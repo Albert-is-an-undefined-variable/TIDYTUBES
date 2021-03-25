@@ -1,11 +1,15 @@
 <?php
 include('server.php');
 
-// SIMPLE SEARCH with KEYWORD from INDEX PAGE
-if (isset($_POST['simple_search'])) {
-	//print("<br><br><br><br>");
-	$searchword = mysqli_real_escape_string($db, $_POST['keyword']); //keyword by user
+// COMMENT LILI: 	there are 2 ways to end up here:
+// 											a. over simple keyword search from Index
+//											b. over Advanced Search
+// 								The following if statement will process the $_POST variables accordingly
+// 								The query search and the result presentation is the same for both cases.
 
+// SIMPLE SEARCH with KEYWORD from INDEX PAGE ----------------------------------
+if (isset($_POST['simple_search'])) {
+	$searchword = mysqli_real_escape_string($db, $_POST['keyword']); //keyword by user
 	// create search query with keyword
 	$query = "SELECT * FROM Sample
 						WHERE Name LIKE '%$searchword%'
@@ -17,45 +21,76 @@ if (isset($_POST['simple_search'])) {
 						OR Amount LIKE '%$searchword%'
 						OR Comment LIKE '%$searchword%'
 					";
-	//search in db
-	$results = mysqli_query($db, $query) or die(mysqli_error($db));
-	// print ($query);
+} // ADVANCED SEARCH -------------------------------------------------------------
+elseif (isset($_POST['reg_search'])) {
+	//receive all input variables from the serach form
+	$samplename = mysqli_real_escape_string($db, $_POST['samplename']);
+	$celltype = mysqli_real_escape_string($db, $_POST['celltype']);
+	// $location = mysqli_real_escape_string($db, $_POST['Location']);		########## STORAGE STILL MISSING !!!!!! #########
+	$rack = mysqli_real_escape_string($db, $_POST['rack']);
+	$position = mysqli_real_escape_string($db, $_POST['position']);
+	$amount = mysqli_real_escape_string($db, $_POST['amount']);
+	$frozendate = mysqli_real_escape_string($db, $_POST['frozendate']);
+	$availability = mysqli_real_escape_string($db, $_POST['availability']);
+	$comment = mysqli_real_escape_string($db, $_POST['comment']);
 
-	if ($results->num_rows > 0) {
-		echo "<table style='width:100%'>
-							<tr>
-								<th>Name</th>
-								<th>Cell Type</th>
-								<th>Freezer</th>
-								<th>Rack</th>
-								<th>Position</th>
-								<th>Date<th>Amount</th>
-								<th>Availability</th>
-								<th>Comment</th>
-							</tr>";
+	// create the search query using the fields from above (empty if not provided by user)
+	$query = "SELECT *
+						FROM Sample
+						WHERE ( IF(LENGTH('$samplename') > 0, Name LIKE '%$samplename%' , 0)
+				    OR IF(LENGTH('$celltype') > 0, Cell_type LIKE '%$celltype%', 0)
+				    OR IF(LENGTH('$frozendate') > 0, Frozendate LIKE '%$frozendate%' , 0)
+				    OR IF(LENGTH('$availability') > 0, Availability LIKE '%$availability%', 0)
+						OR IF(LENGTH('$position') > 0, Position LIKE '%$position%' , 0)
+						OR IF(LENGTH('$rack') > 0, Rack LIKE '%$rack%' , 0)
+						OR IF(LENGTH('$amount') > 0, Amount LIKE '%$amount%' , 0)
+						OR IF(LENGTH('$comment') > 0, Comment LIKE '%$comment%' , 0)
+					)";
 
-		$table = "<h2>Search Results</h2><ol>";
-
-		while($row = $results->fetch_assoc()) {
-			$table .= "<tr>";
-			$table .= "<td>".$row["Name"] . 				"</td>";
-			$table .= "<td>" . $row["Cell_type"] . "</td>";
-			$table .= "<td>MISSING</td>";
-			$table .= "<td>" . $row["Rack"] . 			"</td>";
-			$table .= "<td>" . $row["Position"] .	"</td>";
-			$table .= "<td>" . $row["Frozendate"] . "</td>";
-			$table .= "<td>" . $row["Amount"] . "</td>";
-			$table .= "<td>" . $row["Availability"] . 		"</td>";
-			$table .= "<td>" . $row["Comment"] . 	"</td>";
-			$table .= "</tr>";
-		}
-		$table .= "</table>";
-
-	}
-	$table .= "</ol>";
+	// print($query);
 } else {
 	echo "Something went wrong! Please try again";
 }
+
+//search in db
+$results = mysqli_query($db, $query) or die(mysqli_error($db));
+// print ($query);
+
+// GENERATE RESULT TABLE AND STORE IN '$table'
+if ($results->num_rows > 0) {
+	echo "<table border='1' cellspacing='5' cellpadding='4' id='resultTable' style='width:80%'>
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Cell Type</th>
+							<th>Freezer</th>
+							<th>Rack</th>
+							<th>Position</th>
+							<th>Date<th>Amount</th>
+							<th>Availability</th>
+							<th>Comment</th>
+						</tr>
+					</thead>
+					<tbody>";
+
+	while($row = $results->fetch_assoc()) {
+		$table .= "<tr>";
+		$table .= "<td>".$row["Name"] . 				"</td>";
+		$table .= "<td>" . $row["Cell_type"] . "</td>";
+		$table .= "<td>MISSING</td>";
+		$table .= "<td>" . $row["Rack"] . 			"</td>";
+		$table .= "<td>" . $row["Position"] .	"</td>";
+		$table .= "<td>" . $row["Frozendate"] . "</td>";
+		$table .= "<td>" . $row["Amount"] . "</td>";
+		$table .= "<td>" . $row["Availability"] . 		"</td>";
+		$table .= "<td>" . $row["Comment"] . 	"</td>";
+		$table .= "</tr>";
+	}
+	$table .= "</tbody> </table>";
+
+}
+$table .= "</ol>";
+
 
 ?>
 <!DOCTYPE html>
@@ -73,52 +108,24 @@ if (isset($_POST['simple_search'])) {
 		</div>
 	</div>
 
-	<div>
-		<?php echo $table ?> Num Hits: <?= mysqli_num_rows($results) ?>
+	<div class="container">
+			<h2>Search Results</h2>
+			<div class="content">
+				<h4> Matching Entries found: <?= mysqli_num_rows($results) ?></h4>
+			</div>
+			<!-- RESULT TABLE -->
+			<div>
+				<?php echo $table ?>
+			</div>
+
+			<form method="post" action="search.php">
+				<div class="input-group">
+					<button class="btn btn-success" href="search.php">New advanced Search</button>
+					<button class="btn btn-success" href="index.php">Back to Home</button>
+				</div>
+			</form>
 	</div>
-
-	<!-- start a new search -->
-	<form method="post" action="search.php">
-		<div class="input-group">
-		  <button class="btn btn-success" href="search.php">New advanced Search</button>
-		</div>
-	</form>
-
-
-<!--  Results table from Search-->
-<!--
-Num Hits: <?= mysqli_num_rows($results) ?>
-<table border="0" cellspacing="2" cellpadding="4" id="dataTable">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Cell Type</th>
-            <th>Freezer (not yet)</th>
-            <th>Rack</th>
-            <th>Position</th>
-            <th>Date</th>
-            <th>Availability</th>
-            <th>Amount</th>
-            <th>Comment</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php while ($row = mysqli_fetch_assoc($results)) { ?>
-        <tr>
-            <td><?= $row['Name'] ?></td>
-            <td><?= $row['Cell_type'] ?></td>
-            <td>MISSING!</td>
-            <td><?= $row['Rack'] ?></td>
-            <td><?= $row['Position'] ?></td>
-            <td><?= $row['Frozendate'] ?></td>
-            <td><?= $row['Availability'] ?></td>
-            <td><?= $row['Amount'] ?></td>
-            <td><?= $row['Comment'] ?></td>
-        </tr>
-        <?php } ?>
-    </tbody>
-</table> -->
-
+	<?php include('footer.html') ?>
 
 </body>
 </html>
