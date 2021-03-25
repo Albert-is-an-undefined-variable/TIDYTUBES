@@ -64,6 +64,19 @@ if (isset($_POST['reg_entry'])) {
 								<input type="text" name="celltype" value="<?php echo $celltype; ?>">
 							</div>
 
+              <div class="input-group">
+        				<label for="Storage">Type</label>
+        				<?php
+                  $sql = "Select * from Storage";
+                  $result = mysqli_query($db, $sql);
+          				echo "<select name='unitid'>";
+                  while ($row = mysqli_fetch_array($result)) {
+                     echo "<option value='" .$row['idStorage']."'> ".$row['Location'] . "</option>";
+                  }
+                  echo "</select>";
+           					?>
+        			</div>
+
 							<button type="button" class="btn" data-toggle="modal" data-target="#myModal">Add Storage</button>
 					      <div id="myModal" class="modal fade" role="dialog">
 					            <div class="modal-dialog">
@@ -71,11 +84,11 @@ if (isset($_POST['reg_entry'])) {
 					              <div class="modal-content">
 					                <div class="modal-header">
 					                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-					                  <h5 class="modal-title">Add storage</h5>
+					                  <h5 class="modal-title">Add new Storage</h5>
 					                </div>
 					                <div class="modal-body">
 					                  <input type="text" name="Location" value="<?php echo $location; ?>">
-					                  <button type="submit" class="btn" name="reg_storage">Add</button>
+					                  <button type="submit" class="btn btn-success" name="reg_storage">Add</button>
 					                </div>
 					              </div>
 					            </div>
@@ -115,21 +128,8 @@ if (isset($_POST['reg_entry'])) {
 						<textarea input type="text" rows="10" cols="50" name="comment" value="<?php echo $comment; ?>">Protocol, genetically modified, project XY ...</textarea>
   			</div>
 
-				<div class="input-group">
-  				<label for="Storage">Type</label>
-  				<?php
-            $sql = "Select * from Storage";
-            $result = mysqli_query($db, $sql);
-    				echo "<select name='unitid'>";
-            while ($row = mysqli_fetch_array($result)) {
-               echo "<option value='" .$row['idStorage']."'> ".$row['Location'] . "</option>";
-            }
-            echo "</select>";
-     					?>
-  			</div>
-
     		<div class="input-group">
-    	  	<button type="submit" class="btn" name="reg_entry">Add entry</button>
+    	  	<button type="submit" class="btn btn-success" name="reg_entry">Add entry</button>
     		</div>
 
   		</form>
