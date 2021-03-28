@@ -40,10 +40,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Sample` (
   `Position` VARCHAR(45) NULL,
   `Rack` VARCHAR(45) NULL,
   `idUser` INT NOT NULL,
+  `idStorage` INT NOT NULL,
   PRIMARY KEY (`idSample`),
   CONSTRAINT `fk_Sample_User`
     FOREIGN KEY (`idUser`)
     REFERENCES `mydb`.`User` (`idUser`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Sample_Storage`
+    FOREIGN KEY (`idStorage`)
+    REFERENCES `mydb`.`Storage` (`idStorage`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -78,6 +84,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Storage` (
   `idStorage` INT AUTO_INCREMENT NOT NULL,
+  `Storagename` VARCHAR(45) NULL,
   `Location` VARCHAR(45) NULL,
   PRIMARY KEY (`idStorage`))
 ENGINE = InnoDB;
@@ -142,26 +149,26 @@ CREATE TABLE IF NOT EXISTS `mydb`.`User_has_Storage` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `mydb`.`Sample_has_Storage`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Sample_has_Storage` (
-  `Sample_idSample` INT NOT NULL,
-  `Storage_idStorage` INT NOT NULL,
-  PRIMARY KEY (`Sample_idSample`, `Storage_idStorage`),
-  INDEX `fk_Sample_has_Storage_Storage1_idx` (`Storage_idStorage` ASC) VISIBLE,
-  INDEX `fk_Sample_has_Storage_Sample1_idx` (`Sample_idSample` ASC) VISIBLE,
-  CONSTRAINT `fk_Sample_has_Storage_Sample1`
-    FOREIGN KEY (`Sample_idSample`)
-    REFERENCES `mydb`.`Sample` (`idSample`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Sample_has_Storage_Storage1`
-    FOREIGN KEY (`Storage_idStorage`)
-    REFERENCES `mydb`.`Storage` (`idStorage`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+-- -- -----------------------------------------------------
+-- -- Table `mydb`.`Sample_has_Storage`
+-- -- -----------------------------------------------------
+-- CREATE TABLE IF NOT EXISTS `mydb`.`Sample_has_Storage` (
+--   `Sample_idSample` INT NOT NULL,
+--   `Storage_idStorage` INT NOT NULL,
+--   PRIMARY KEY (`Sample_idSample`, `Storage_idStorage`),
+--   INDEX `fk_Sample_has_Storage_Storage1_idx` (`Storage_idStorage` ASC) VISIBLE,
+--   INDEX `fk_Sample_has_Storage_Sample1_idx` (`Sample_idSample` ASC) VISIBLE,
+--   CONSTRAINT `fk_Sample_has_Storage_Sample1`
+--     FOREIGN KEY (`Sample_idSample`)
+--     REFERENCES `mydb`.`Sample` (`idSample`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION,
+--   CONSTRAINT `fk_Sample_has_Storage_Storage1`
+--     FOREIGN KEY (`Storage_idStorage`)
+--     REFERENCES `mydb`.`Storage` (`idStorage`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION)
+-- ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

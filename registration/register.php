@@ -71,6 +71,7 @@ if (isset($_POST['reg_user'])) {
 </head>
 <body>
 
+
 	<?php include('error.php'); ?>
 
     <nav style="background-color: rgba(0,0,0,.2);" class="navbar navbar-light navbar-fixed-top" style="background-color: #45B8AC;">

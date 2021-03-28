@@ -22,14 +22,16 @@
     <div class="jumbotron text-center" style="margin-bottom: 0px;">
         <h1>Home page</h1>
         <p>We declare war to chaos! Find your tubes:</p>
-        <form class="form-inline">
+
+        <form class="form-inline" method="post" action="search_res.php">
             <div class="input-group">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" required>
-                <div class="input-group-btn">
-                    <button class="btn btn-success" type="submit">Search</button>
-                </div>
+                <input class="form-control mr-sm-2" name="keyword" type="text" placeholder="Search" value="<?php echo $keyword; ?>" required>
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-success" name="simple_search">Search</button>
+                  </div>
             </div>
         </form>
+
     </div>
 
 <?php include('header.html') ?>
