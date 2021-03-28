@@ -42,7 +42,8 @@ if (isset($_POST['reg_entry'])) {
 
 </head>
 <body>
-	<?php include('header.html') ?>
+<?php include('header.html') ?>
+
 
         <div class="hero">
 					<div class="jumbotron text-center" style="margin-bottom: 0px;">
