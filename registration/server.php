@@ -10,7 +10,7 @@ $errors = array();
 $samplename = $celltype = $idfreezer = $rack = $position = $amount = $frozendate = $availability = $comment = $Location = '';
 $errors_registration = array('username' => '', 'email' => '', 'password_1' => '', 'password_2' => '');
 // connect to the database
-$db = mysqli_connect('localhost', 'tidytubes', 'Welcome123%', 'mydb');
+$db = mysqli_connect('localhost', 'albert', '/Puiyuaru1616', 'mydb');
 
 
 
