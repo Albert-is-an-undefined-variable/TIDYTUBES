@@ -25,16 +25,18 @@ if (isset($_POST['reg_entry'])) {
   // if (empty($amount)) { array_push($errors, "Amount is required"); }
   if (empty($frozendate)) { array_push($errors, "Frozen date is required"); }
 
-  print($idStorage);
+
   // Finally, add the new entry in the sample table
   if (count($errors) == 0) {
   	$query = "INSERT INTO Sample (Name, Cell_type, idStorage, Rack, Position, Frozendate, Amount, Availability, Comment, idUser)
   			  VALUES('$samplename', '$celltype', '$idStorage', '$rack', '$position', '$frozendate', '$amount', '$availability', '$comment','".$_SESSION["userdata"]["idUser"]."')";
-    print($query);
+    # print("<br><br><br>");
+    # print($query);
     mysqli_query($db, $query) or die(mysqli_error($db));
 
   }
 }
+
 
 if (isset($_POST['reg_storage'])) {
   #print_r("<br><br><br><br><br><br>");
@@ -49,6 +51,7 @@ if (isset($_POST['reg_storage'])) {
         #print($query);
         mysqli_query($db, $query) or die(mysqli_error($db));
       }
+
 
 
 if (isset($_POST['add_storage'])) {
@@ -100,12 +103,15 @@ if (isset($_POST['add_storage'])) {
 
               <div class="input-group">
         				<label for="idStorage">Storage:</label>
+
+                
                 <?php
           				echo "<select name='idStorage'>";
                   while ($row = mysqli_fetch_array($res_st)) {
                   echo "<option value='" .$row['idStorage']."'> ".$row['Storagename'] . "</option>";
                 }
                 echo "</select>";
+
            					?>
         			</div>
 
@@ -174,7 +180,7 @@ if (isset($_POST['add_storage'])) {
 								<option value="semiprivat">Semiprivat</option>
 								<option value="public">Public</option>
 							</select>
-  				</div>
+  				  </div>
 
 					<div class="input-group">
   	  			<label>Add a note:</label>
