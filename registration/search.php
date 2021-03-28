@@ -37,11 +37,11 @@ include('server.php');
 				 </div>
 
 				 <div class="input-group">
-	 				<label for="Storage">Select Storage / Freezer</label>
+	 				<label for="Storagename">Select Storage</label>
 	 				<?php
 	 					$sql = "Select * from Storage";
 	 					$result = mysqli_query($db, $sql);
-	 					echo "<select name='unitid'>";
+	 					echo "<select name='Storagename'>";
 						echo "<option value='empty'></option>";
 	 					while ($row = mysqli_fetch_array($result)) {
 	 						 echo "<option value='" .$row['idStorage']."'> ".$row['Storagename']. "</option>"; #   We could add this here to print not just Storagename but also location: $row['Location'] .
