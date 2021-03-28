@@ -7,7 +7,7 @@ if (isset($_POST['reg_entry'])) {
   // receive all input values from the entry form
   $samplename = mysqli_real_escape_string($db, $_POST['samplename']);
   $celltype = mysqli_real_escape_string($db, $_POST['celltype']);
-  $storagename = mysqli_real_escape_string($db, $_POST['Storagename']);
+  $idStorage = mysqli_real_escape_string($db, $_POST['idStorage']);
   $rack = mysqli_real_escape_string($db, $_POST['rack']);
   $position = mysqli_real_escape_string($db, $_POST['position']);
   $amount = mysqli_real_escape_string($db, $_POST['amount']);
@@ -25,10 +25,11 @@ if (isset($_POST['reg_entry'])) {
   // if (empty($amount)) { array_push($errors, "Amount is required"); }
   if (empty($frozendate)) { array_push($errors, "Frozen date is required"); }
 
+  print($idStorage);
   // Finally, add the new entry in the sample table
   if (count($errors) == 0) {
-  	$query = "INSERT INTO Sample (Name, Cell_type, Rack, Position, Frozendate, Amount, Availability, Comment, idUser)
-  			  VALUES('$samplename', '$celltype', '$rack', '$position', '$frozendate', '$amount', '$availability', '$comment','".$_SESSION["userdata"]["idUser"]."')";
+  	$query = "INSERT INTO Sample (Name, Cell_type, idStorage, Rack, Position, Frozendate, Amount, Availability, Comment, idUser)
+  			  VALUES('$samplename', '$celltype', '$idStorage', '$rack', '$position', '$frozendate', '$amount', '$availability', '$comment','".$_SESSION["userdata"]["idUser"]."')";
     print($query);
     mysqli_query($db, $query) or die(mysqli_error($db));
 
@@ -66,11 +67,11 @@ if (isset($_POST['reg_entry'])) {
 							</div>
 
               <div class="input-group">
-        				<label for="Storage">Type</label>
+        				<label for="Storage">Storage:</label>
         				<?php
                   $sql = "Select * from Storage";
                   $result = mysqli_query($db, $sql);
-          				echo "<select name='unitid'>";
+          				echo "<select name='Storagename'>";
                   while ($row = mysqli_fetch_array($result)) {
                      echo "<option value='" .$row['idStorage']."'> ".$row['Storagename'] . "</option>";
                   }

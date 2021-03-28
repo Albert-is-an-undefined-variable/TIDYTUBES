@@ -5,13 +5,13 @@ session_start();
 $username = "";
 $email    = "";
 $table ="";       //result table for search
-$keyword = $searchword ="";  //for simple search on index page
+$keyword = $searchword = "";  //for simple search on index page
 $errors = array();
-$samplename = $celltype = $idfreezer = $rack = $position = $amount = $frozendate = $availability = $comment = $Location = '';
+$samplename = $celltype = $idfreezer = $rack = $position = $amount = $frozendate = $availability = $comment = $storagename = '';
 $errors_registration = array('username' => '', 'email' => '', 'password_1' => '', 'password_2' => '');
 // connect to the database
-$db = mysqli_connect('localhost', 'albert', '/Puiyuaru1616', 'mydb');
-
+# $db = mysqli_connect('localhost', 'albert', '/Puiyuaru1616', 'mydb');   # albert pw
+$db = mysqli_connect('localhost', 'tidytubes', 'Welcome123%', 'mydb');    # jo & lili pw
 
 
 // NEW SEARCH
@@ -71,17 +71,15 @@ $db = mysqli_connect('localhost', 'albert', '/Puiyuaru1616', 'mydb');
 if (isset($_POST['reg_storage'])) {
   #print_r("<br><br><br><br><br><br>");
   #printf("INSIDE STORAGE");
-  $location = mysqli_real_escape_string($db, $_POST['Location']);
-  print($location);
-  if (empty($location)) { array_push($errors, "ID storage is required"); }
+  $storagename = mysqli_real_escape_string($db, $_POST['Storagename']);
+  print($storagename);
+  if (empty($storagename)) { array_push($errors, "ID storage is required"); }
   if (count($errors) == 0) {
-  	$query = "INSERT INTO Storage (Location)
-  			  VALUES ('$location')";
+  	$query = "INSERT INTO Storage (Storagename)
+  			  VALUES ('$storagename')";
         }
         #print($query);
         mysqli_query($db, $query) or die(mysqli_error($db));
-
-
       }
 
 
