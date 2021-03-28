@@ -11,22 +11,26 @@ include('server.php');
 if (isset($_POST['simple_search'])) {
 	$searchword = mysqli_real_escape_string($db, $_POST['keyword']); //keyword by user
 	// create search query with keyword
-	$query = "SELECT * FROM Sample
-						WHERE Name LIKE '%$searchword%'
-						OR Cell_type LIKE '%$searchword%'
-						OR Frozendate LIKE '%$searchword%'
-						OR Availability LIKE '%$searchword%'
-						OR Position LIKE '%$searchword%'
-						OR Rack LIKE '%$searchword%'
-						OR Amount LIKE '%$searchword%'
-						OR Comment LIKE '%$searchword%'
-					";
+	// $query = "SELECT *
+	// 					FROM Sample
+	// 					Where ( Name, Cell_type, Frozendate, Availability, Comment) LIKE '%$searchword%'";
+	// 					// OR Cell_type LIKE '%$searchword%'
+	// 					// OR Frozendate LIKE '%$searchword%'
+	// 					// OR Availability LIKE '%$searchword%'
+	// 					// OR Comment LIKE '%$searchword%'
+
+
+	// print("<br><br><br>");
+	print("<br><br><br>");
+	print($query);
+
+
 } // ADVANCED SEARCH -------------------------------------------------------------
 elseif (isset($_POST['reg_search'])) {
 	//receive all input variables from the serach form
 	$samplename = mysqli_real_escape_string($db, $_POST['samplename']);
 	$celltype = mysqli_real_escape_string($db, $_POST['celltype']);
-	$storagename = mysqli_real_escape_string($db, $_POST['Storagename']);
+	$idStorage = mysqli_real_escape_string($db, $_POST['idStorage']);
 	$rack = mysqli_real_escape_string($db, $_POST['rack']);
 	$position = mysqli_real_escape_string($db, $_POST['position']);
 	$amount = mysqli_real_escape_string($db, $_POST['amount']);
@@ -39,6 +43,7 @@ elseif (isset($_POST['reg_search'])) {
 						FROM Sample
 						WHERE ( IF(LENGTH('$samplename') > 0, Name LIKE '%$samplename%' , 0)
 				    OR IF(LENGTH('$celltype') > 0, Cell_type LIKE '%$celltype%', 0)
+						OR IF(LENGTH('$idStorage') > 0, idStorage = '$idStorage' , 0)
 				    OR IF(LENGTH('$frozendate') > 0, Frozendate LIKE '%$frozendate%' , 0)
 				    OR IF(LENGTH('$availability') > 0, Availability LIKE '%$availability%', 0)
 						OR IF(LENGTH('$position') > 0, Position LIKE '%$position%' , 0)
@@ -46,11 +51,10 @@ elseif (isset($_POST['reg_search'])) {
 						OR IF(LENGTH('$amount') > 0, Amount LIKE '%$amount%' , 0)
 						OR IF(LENGTH('$comment') > 0, Comment LIKE '%$comment%' , 0)
 					)";
-
-	// print($query);
+	//print($query);
 } else {
 	echo "Something went wrong! Please try again";
-}
+};
 
 //search in db
 $results = mysqli_query($db, $query) or die(mysqli_error($db));
@@ -65,39 +69,61 @@ if ($results->num_rows > 0) {
 							<th>Name</th>
 							<th>Cell Type</th>
 							<th>Freezer name</th>
-							<th>location</th>
+							<th>Freezer Location</th>
 							<th>Rack</th>
 							<th>Position</th>
 							<th>Date</th>
 							<th>Amount</th>
 							<th>Availability</th>
 							<th>Comment</th>
+							<th>Delete</th>
 						</tr>
 					</thead>
 					<tbody>";
 
 	while($row = $results->fetch_assoc()) {
 		// query search for the storage table
-		$idStorage = $row["idStorage"];
-		$queryStorage = "SELECT * FROM Storage WHERE idStorage = '%$idStorage%' ";
+
+		$queryStorage = "SELECT * FROM Storage WHERE idStorage = $idStorage";
+		$resultsStorage = mysqli_query($db, $queryStorage) or die(mysqli_error($db));
+
+		while($storage = $resultsStorage->fetch_assoc()){
+			$storagename = $storage["Storagename"];
+			$location = $storage["Location"];
+		}
 
 		$table .= "<tr>";
-		$table .= "<td>".$row["Name"]. 				"</td>";
+		$table .= "<td>" . $row["Name"] . "</td>";
 		$table .= "<td>" . $row["Cell_type"] . "</td>";
-		$table .= "<td>MISSING</td>";
-		$table .= "<td>MISSING</td>";
-		$table .= "<td>" . $row["Rack"] . 			"</td>";
+		$table .= "<td>" . $storagename . "</td>";
+		$table .= "<td>" . $location . "</td>";
+		$table .= "<td>" . $row["Rack"] . "</td>";
 		$table .= "<td>" . $row["Position"] .	"</td>";
 		$table .= "<td>" . $row["Frozendate"] . "</td>";
 		$table .= "<td>" . $row["Amount"] . "</td>";
-		$table .= "<td>" . $row["Availability"] . 		"</td>";
+		$table .= "<td>" . $row["Availability"] . "</td>";
 		$table .= "<td>" . $row["Comment"] . 	"</td>";
+		$table .= "<td class='delete_entry'>
+								<form action = 'delete_entry' method='post'>
+									<input type='hidden' name='idSample' value="; echo $row["idSample"] ; ">
+									<input type='submit' name='submit_delete' value='Delete'>
+								</form>
+							</td>";
 		$table .= "</tr>";
 	}
 	$table .= "</tbody> </table>";
 
 }
 $table .= "</ol>";
+
+// // DELETE AN ENTRY
+// if (isset($_POST['delete_entry'])) {
+// 	$queryDelete = "DELETE FROM Sample WHERE idSample = $idSample"
+// 	$
+// }
+//
+// 	//Define the query
+// 	$query = "DELETE FROM Sample WHERE idSample={$_POST['idSample']}";
 
 
 ?>
@@ -119,17 +145,18 @@ $table .= "</ol>";
 	<div class="container">
 			<h2>Search Results</h2>
 			<div class="content">
-				<h4> Matching Entries found: <?= mysqli_num_rows($results) ?></h4>
+				<h4>Entries matching your Search: <?= mysqli_num_rows($results) ?></h4>
 			</div>
 			<!-- RESULT TABLE -->
 			<div>
 				<?php echo $table ?>
+
 			</div>
 
 			<form method="post" action="search.php">
 				<div class="input-group">
 					<button class="btn btn-success" href="search.php">New advanced Search</button>
-					<button class="btn btn-success" href="index.php">Back to Home</button>
+					<button class="btn btn-success" href="index.html">Back to Home</button>
 				</div>
 			</form>
 	</div>
