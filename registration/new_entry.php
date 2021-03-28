@@ -7,7 +7,7 @@ if (isset($_POST['reg_entry'])) {
   // receive all input values from the entry form
   $samplename = mysqli_real_escape_string($db, $_POST['samplename']);
   $celltype = mysqli_real_escape_string($db, $_POST['celltype']);
-  $location = mysqli_real_escape_string($db, $_POST['Location']);
+  $storagename = mysqli_real_escape_string($db, $_POST['Storagename']);
   $rack = mysqli_real_escape_string($db, $_POST['rack']);
   $position = mysqli_real_escape_string($db, $_POST['position']);
   $amount = mysqli_real_escape_string($db, $_POST['amount']);
@@ -71,7 +71,7 @@ if (isset($_POST['reg_entry'])) {
                   $result = mysqli_query($db, $sql);
           				echo "<select name='unitid'>";
                   while ($row = mysqli_fetch_array($result)) {
-                     echo "<option value='" .$row['idStorage']."'> ".$row['Location'] . "</option>";
+                     echo "<option value='" .$row['idStorage']."'> ".$row['Storagename'] . "</option>";
                   }
                   echo "</select>";
            					?>
@@ -87,7 +87,7 @@ if (isset($_POST['reg_entry'])) {
 					                  <h5 class="modal-title">Add new Storage</h5>
 					                </div>
 					                <div class="modal-body">
-					                  <input type="text" name="Location" value="<?php echo $location; ?>">
+					                  <input type="text" name="Storagename" value="<?php echo $storagename; ?>">
 					                  <button type="submit" class="btn btn-success" name="reg_storage">Add</button>
 					                </div>
 					              </div>

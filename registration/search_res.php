@@ -26,7 +26,7 @@ elseif (isset($_POST['reg_search'])) {
 	//receive all input variables from the serach form
 	$samplename = mysqli_real_escape_string($db, $_POST['samplename']);
 	$celltype = mysqli_real_escape_string($db, $_POST['celltype']);
-	// $location = mysqli_real_escape_string($db, $_POST['Location']);		########## STORAGE STILL MISSING !!!!!! #########
+	$storagename = mysqli_real_escape_string($db, $_POST['Storagename']);
 	$rack = mysqli_real_escape_string($db, $_POST['rack']);
 	$position = mysqli_real_escape_string($db, $_POST['position']);
 	$amount = mysqli_real_escape_string($db, $_POST['amount']);
@@ -58,15 +58,18 @@ $results = mysqli_query($db, $query) or die(mysqli_error($db));
 
 // GENERATE RESULT TABLE AND STORE IN '$table'
 if ($results->num_rows > 0) {
+
 	echo "<table border='1' cellspacing='5' cellpadding='4' id='resultTable' style='width:80%'>
 					<thead>
 						<tr>
 							<th>Name</th>
 							<th>Cell Type</th>
-							<th>Freezer</th>
+							<th>Freezer name</th>
+							<th>location</th>
 							<th>Rack</th>
 							<th>Position</th>
-							<th>Date<th>Amount</th>
+							<th>Date</th>
+							<th>Amount</th>
 							<th>Availability</th>
 							<th>Comment</th>
 						</tr>
@@ -74,9 +77,14 @@ if ($results->num_rows > 0) {
 					<tbody>";
 
 	while($row = $results->fetch_assoc()) {
+		// query search for the storage table
+		$idStorage = $row["idStorage"];
+		$queryStorage = "SELECT * FROM Storage WHERE idStorage = '%$idStorage%' ";
+
 		$table .= "<tr>";
-		$table .= "<td>".$row["Name"] . 				"</td>";
+		$table .= "<td>".$row["Name"]. 				"</td>";
 		$table .= "<td>" . $row["Cell_type"] . "</td>";
+		$table .= "<td>MISSING</td>";
 		$table .= "<td>MISSING</td>";
 		$table .= "<td>" . $row["Rack"] . 			"</td>";
 		$table .= "<td>" . $row["Position"] .	"</td>";

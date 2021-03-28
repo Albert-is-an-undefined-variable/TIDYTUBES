@@ -25,7 +25,7 @@ include('server.php');
 			 <?php include('error.php'); ?>
 			 <div class="container">
 				 <h2>Enter the Details of your Search</h2>
-				 
+
 				 <div class="input-group">
 					 <label>Sample name:</label>
 					 <input type="text" name="samplename" value="<?php echo $samplename; ?>">
@@ -44,7 +44,7 @@ include('server.php');
 	 					echo "<select name='unitid'>";
 						echo "<option value='empty'></option>";
 	 					while ($row = mysqli_fetch_array($result)) {
-	 						 echo "<option value='" .$row['idStorage']."'> ".$row['Location'] . "</option>";
+	 						 echo "<option value='" .$row['idStorage']."'> ".$row['Storagename']. "</option>"; #   We could add this here to print not just Storagename but also location: $row['Location'] .
 	 					}
 	 					echo "</select>";
 	 						?>
