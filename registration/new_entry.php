@@ -25,16 +25,33 @@ if (isset($_POST['reg_entry'])) {
   // if (empty($amount)) { array_push($errors, "Amount is required"); }
   if (empty($frozendate)) { array_push($errors, "Frozen date is required"); }
 
-  print($idStorage);
+
   // Finally, add the new entry in the sample table
   if (count($errors) == 0) {
   	$query = "INSERT INTO Sample (Name, Cell_type, idStorage, Rack, Position, Frozendate, Amount, Availability, Comment, idUser)
   			  VALUES('$samplename', '$celltype', '$idStorage', '$rack', '$position', '$frozendate', '$amount', '$availability', '$comment','".$_SESSION["userdata"]["idUser"]."')";
-    print($query);
+    # print("<br><br><br>");
+    # print($query);
     mysqli_query($db, $query) or die(mysqli_error($db));
 
   }
 }
+
+// ADD A NEW STORAGE TO USER TABLE
+if (isset($_POST['reg_storage'])) {
+  #print_r("<br><br><br><br><br><br>");
+  #printf("INSIDE STORAGE");
+  $storagename = mysqli_real_escape_string($db, $_POST['Storagename']);
+  print($storagename);
+  if (empty($storagename)) { array_push($errors, "ID storage is required"); }
+  if (count($errors) == 0) {
+  	$query = "INSERT INTO Storage (Storagename)
+  			  VALUES ('$storagename')";
+        }
+        #print($query);
+        mysqli_query($db, $query) or die(mysqli_error($db));
+      }
+
 
 ?>
 <!DOCTYPE html>
@@ -67,11 +84,11 @@ if (isset($_POST['reg_entry'])) {
 							</div>
 
               <div class="input-group">
-        				<label for="Storage">Storage:</label>
+        				<label for="idStorage">Storage:</label>
         				<?php
                   $sql = "Select * from Storage";
                   $result = mysqli_query($db, $sql);
-          				echo "<select name='Storagename'>";
+          				echo "<select name='idStorage'>";
                   while ($row = mysqli_fetch_array($result)) {
                      echo "<option value='" .$row['idStorage']."'> ".$row['Storagename'] . "</option>";
                   }
@@ -123,7 +140,7 @@ if (isset($_POST['reg_entry'])) {
 								<option value="semiprivat">Semiprivat</option>
 								<option value="public">Public</option>
 							</select>
-  				</div>
+  				  </div>
 
 					<div class="input-group">
   	  			<label>Add a note:</label>
