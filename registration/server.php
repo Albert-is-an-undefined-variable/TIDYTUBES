@@ -68,19 +68,7 @@ $db = mysqli_connect('localhost', 'tidytubes', 'Welcome123%', 'mydb');    # jo &
   //}
 
 
-if (isset($_POST['reg_storage'])) {
-  #print_r("<br><br><br><br><br><br>");
-  #printf("INSIDE STORAGE");
-  $storagename = mysqli_real_escape_string($db, $_POST['Storagename']);
-  print($storagename);
-  if (empty($storagename)) { array_push($errors, "ID storage is required"); }
-  if (count($errors) == 0) {
-  	$query = "INSERT INTO Storage (Storagename)
-  			  VALUES ('$storagename')";
-        }
-        #print($query);
-        mysqli_query($db, $query) or die(mysqli_error($db));
-      }
+
 
 
 

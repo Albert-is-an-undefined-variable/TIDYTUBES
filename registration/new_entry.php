@@ -36,6 +36,38 @@ if (isset($_POST['reg_entry'])) {
   }
 }
 
+if (isset($_POST['reg_storage'])) {
+  #print_r("<br><br><br><br><br><br>");
+  #printf("INSIDE STORAGE");
+  $storagename = mysqli_real_escape_string($db, $_POST['Storagename']);
+  print($storagename);
+  if (empty($storagename)) { array_push($errors, "ID storage is required"); }
+  if (count($errors) == 0) {
+  	$query = "INSERT INTO Storage (Storagename)
+  			  VALUES ('$storagename')";
+        }
+        #print($query);
+        mysqli_query($db, $query) or die(mysqli_error($db));
+      }
+
+
+if (isset($_POST['add_storage'])) {
+    $Addstorage = mysqli_real_escape_string($db, $_POST['Addstorage']);
+    echo ("INSIDE ADD STORAGE<br><br><br><br>");
+    // check if the storage exists in the database
+    $check_storage = "SELECT idStorage FROM Storage WHERE idStorage='$Addstorage'";
+    $result_storage = mysqli_query($db, $check_storage);
+    if(mysqli_num_rows($result_storage) >0){
+          $sql = "SELECT * from Storage";
+          $res_st = mysqli_query($db,$sql);
+           echo "found";
+    }else{
+   //
+   echo "not found";
+ }}
+
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -67,34 +99,53 @@ if (isset($_POST['reg_entry'])) {
 							</div>
 
               <div class="input-group">
-        				<label for="Storage">Storage:</label>
-        				<?php
-                  $sql = "Select * from Storage";
-                  $result = mysqli_query($db, $sql);
-          				echo "<select name='Storagename'>";
-                  while ($row = mysqli_fetch_array($result)) {
-                     echo "<option value='" .$row['idStorage']."'> ".$row['Storagename'] . "</option>";
-                  }
-                  echo "</select>";
+        				<label for="idStorage">Storage:</label>
+                <?php
+          				echo "<select name='idStorage'>";
+                  while ($row = mysqli_fetch_array($res_st)) {
+                  echo "<option value='" .$row['idStorage']."'> ".$row['Storagename'] . "</option>";
+                }
+                echo "</select>";
            					?>
         			</div>
 
-							<button type="button" class="btn" data-toggle="modal" data-target="#myModal">Add Storage</button>
+              <!-- CREATE A FREEEZEEER -->
+
+							<button type="button" class="btn" data-toggle="modal" data-target="#myModal">Create Storage</button>
 					      <div id="myModal" class="modal fade" role="dialog">
 					            <div class="modal-dialog">
 					              <!-- Modal content-->
 					              <div class="modal-content">
 					                <div class="modal-header">
 					                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-					                  <h5 class="modal-title">Add new Storage</h5>
+					                  <h5 class="modal-title">Create new Storage</h5>
 					                </div>
 					                <div class="modal-body">
 					                  <input type="text" name="Storagename" value="<?php echo $storagename; ?>">
-					                  <button type="submit" class="btn btn-success" name="reg_storage">Add</button>
+					                  <button type="submit" class="btn btn-success" name="reg_storage">Create</button>
 					                </div>
 					              </div>
 					            </div>
 					          </div>
+
+                    <!-- ADD A FREEZER-->
+
+                    <button type="button" class="btn" data-toggle="modal" data-target="#myM">Add Storage</button>
+      					      <div id="myM" class="modal fade" role="dialog">
+      					            <div class="modal-dialog">
+      					              <!-- Modal content-->
+      					              <div class="modal-content">
+      					                <div class="modal-header">
+      					                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+      					                  <h5 class="modal-title">Add new Storage</h5>
+      					                </div>
+      					                <div class="modal-body">
+      					                  <input type="text" name="Addstorage" value="<?php echo $Addstorage; ?>">
+      					                  <button type="submit" class="btn btn-success" name="add_storage">Add</button>
+      					                </div>
+      					              </div>
+      					            </div>
+      					          </div>
 
 						<div class="input-group">
   	  				<label>Position:</label>
