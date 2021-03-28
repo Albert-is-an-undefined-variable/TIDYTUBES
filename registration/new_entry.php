@@ -42,7 +42,7 @@ if (isset($_POST['reg_entry'])) {
 
 </head>
 <body>
-	<?php include('header.html') ?>
+<?php include('header.html') ?>
 
 
         <div class="hero">
@@ -62,28 +62,26 @@ if (isset($_POST['reg_entry'])) {
 								<label>Cell Type:</label>
 								<input type="text" name="celltype" value="<?php echo $celltype; ?>">
 							</div>
-							<div class="input-group">
-								<label>Choose a freezer:</label>
-								<select name="idfreezer">
-									<option value="freezer_id1">Freezer 01</option>
-									<option value="freezer_id2">Freezer 02</option>
-									<option value="freezer_id3">Freezer 03</option>
-									<option value="freezer_id4">Freezer 04</option>
-								</select>
-  					</div>
-						<div class="input-group">
-							<label>Rack:</label>
-  	  				<input type="text" name="rack" value="<?php echo $rack; ?>">
-  					</div>
+							<button type="button" class="btn" data-toggle="modal" data-target="#myModal">Add Storage</button>
+					      <div id="myModal" class="modal fade" role="dialog">
+					            <div class="modal-dialog">
+					              <!-- Modal content-->
+					              <div class="modal-content">
+					                <div class="modal-header">
+					                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+					                  <h5 class="modal-title">Add storage</h5>
+					                </div>
+					                <div class="modal-body">
+					                  <input type="text" name="Location" value="<?php echo $Location; ?>">
+					                  <button type="submit" class="btn" name="reg_storage">Add</button>
+					                </div>
+					              </div>
+					            </div>
+					          </div>
 						<div class="input-group">
   	  				<label>Position:</label>
   	  				<input type="text" name="position" value="<?php echo $position; ?>">
   					</div>
-						<div class="container">
-							<div class="input-group">
-  	  					<label><p><strong>Cannot find the right Freezer?</strong>Connect your account to a new freezer using its freezer ID.</p></label>
-  	  					<input type="text" name="" value="">
-							</div>
   					</div>
 						<div class="input-group">
   	  				<label>Quantity of tubes:</label>
@@ -105,6 +103,18 @@ if (isset($_POST['reg_entry'])) {
   	  			<label>Add a note:</label>
 						<textarea input type="text" rows="10" cols="50" name="comment" value="<?php echo $comment; ?>">Protocol, genetically modified, project XY ...</textarea>
   			</div>
+				<div class="input-group">
+					<label for="Storage">Type</label>
+					<?php
+        $sql = "Select * from Storage";
+        $result = mysqli_query($db, $sql);
+				echo "<select name='unitid'>";
+        while ($row = mysqli_fetch_array($result)) {
+           echo "<option value='" .$row['idStorage']."'> ".$row['Location'] . "</option>";
+        }
+        echo "</select>";
+ 					?>
+			</div>
   		<div class="input-group">
   	  	<button type="submit" class="btn" name="reg_entry">Add entry</button>
   		</div>
@@ -121,5 +131,6 @@ if (isset($_POST['reg_entry'])) {
         <?php include('footer.html') ?>
 
   </div>
+
 </body>
 </html>

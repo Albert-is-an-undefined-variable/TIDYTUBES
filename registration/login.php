@@ -48,7 +48,11 @@ if (isset($_POST['login_user'])) {
 </head>
 <body>
 
-
+    <nav style="background-color: rgba(0,0,0,.2);" class="navbar navbar-light navbar-fixed-top" style="background-color: #45B8AC;">
+    <div class="navbar-header">
+      <a style="color: white;"class="navbar-brand" href="index.html">TIDYTUBES</a></div>
+    </div>
+    </nav>
 
 <!-- login -->
 <br>
@@ -101,10 +105,21 @@ if (isset($_POST['login_user'])) {
      <script  src="java.js"></script>
 
 <!-- style login -->
+
     <style media="screen">
-    * {
-      margin: 0;
-      padding: 0;
+    body, html {
+        background: #00C9FF;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #92FE9D, #00C9FF);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #92FE9D, #00C9FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        background-color: #E8A87C;
+        margin: 0;
+        padding: 0;
+    }
+
       /* box-sizing: border-box; */
     }
     body {
