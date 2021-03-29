@@ -32,7 +32,16 @@
             </div>
         </form>
 
+        <form class="form-inline" method="post" action="search_res.php">
+            <div class="input-group">
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-success" name="my_entries">Show all my Tubes</button>
+                  </div>
+            </div>
+        </form>
+
     </div>
+
 
 <?php include('header.html') ?>
 

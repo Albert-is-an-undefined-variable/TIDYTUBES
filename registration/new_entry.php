@@ -103,55 +103,51 @@ if (isset($_POST['add_storage'])) {
 
               <div class="input-group">
         				<label for="idStorage">Storage:</label>
-
-                
                 <?php
           				echo "<select name='idStorage'>";
                   while ($row = mysqli_fetch_array($res_st)) {
-                  echo "<option value='" .$row['idStorage']."'> ".$row['Storagename'] . "</option>";
-                }
-                echo "</select>";
-
-           					?>
+                    echo "<option value='" .$row['idStorage']."'> ".$row['Storagename'] . "</option>";
+                  }
+                  echo "</select>";
+           				?>
         			</div>
 
               <!-- CREATE A FREEEZEEER -->
-
 							<button type="button" class="btn" data-toggle="modal" data-target="#myModal">Create Storage</button>
 					      <div id="myModal" class="modal fade" role="dialog">
-					            <div class="modal-dialog">
-					              <!-- Modal content-->
-					              <div class="modal-content">
-					                <div class="modal-header">
-					                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-					                  <h5 class="modal-title">Create new Storage</h5>
-					                </div>
-					                <div class="modal-body">
-					                  <input type="text" name="Storagename" value="<?php echo $storagename; ?>">
-					                  <button type="submit" class="btn btn-success" name="reg_storage">Create</button>
-					                </div>
+					        <div class="modal-dialog">
+					            <!-- Modal content-->
+					            <div class="modal-content">
+					              <div class="modal-header">
+					                <button type="button" class="close" data-dismiss="modal">&times;</button>
+					                <h5 class="modal-title">Create new Storage</h5>
+					              </div>
+					              <div class="modal-body">
+					                <input type="text" name="Storagename" value="<?php echo $storagename; ?>">
+					                <button type="submit" class="btn btn-success" name="reg_storage">Create</button>
 					              </div>
 					            </div>
 					          </div>
+					        </div>
 
                     <!-- ADD A FREEZER-->
 
-                    <button type="button" class="btn" data-toggle="modal" data-target="#myM">Add Storage</button>
-      					      <div id="myM" class="modal fade" role="dialog">
-      					            <div class="modal-dialog">
-      					              <!-- Modal content-->
-      					              <div class="modal-content">
-      					                <div class="modal-header">
-      					                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-      					                  <h5 class="modal-title">Add new Storage</h5>
-      					                </div>
-      					                <div class="modal-body">
-      					                  <input type="text" name="Addstorage" value="<?php echo $Addstorage; ?>">
-      					                  <button type="submit" class="btn btn-success" name="add_storage">Add</button>
-      					                </div>
-      					              </div>
+                  <button type="button" class="btn" data-toggle="modal" data-target="#myM">Add Storage</button>
+      					    <div id="myM" class="modal fade" role="dialog">
+      					        <div class="modal-dialog">
+      					             <!-- Modal content-->
+      					          <div class="modal-content">
+      					            <div class="modal-header">
+      					                 <button type="button" class="close" data-dismiss="modal">&times;</button>
+      					                 <h5 class="modal-title">Add new Storage</h5>
+      					            </div>
+      					            <div class="modal-body">
+      					                 <input type="text" name="Addstorage" value="<?php echo $Addstorage; ?>">
+      					                 <button type="submit" class="btn btn-success" name="add_storage">Add</button>
       					            </div>
       					          </div>
+      					        </div>
+      					      </div>
 
 						<div class="input-group">
   	  				<label>Position:</label>
