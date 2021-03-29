@@ -17,9 +17,13 @@ include('server.php');
 
   <div class="hero">
     <div class="jumbotron text-center" style="margin-bottom: 0px;">
+<<<<<<< HEAD
          <h1>Advanced Search <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
 	   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
 	 </svg></h1>
+=======
+         <h1>Advanced Search</h1>
+>>>>>>> ff05ecd91cf393d8e1c986ae9eb43eaeca013eb5
          <p>Can't find your cells? I bet, we can!</p>
     </div>
 
@@ -28,6 +32,7 @@ include('server.php');
 			 <div class="container">
 				 <h2>Enter the Details of your Search</h2>
 
+<<<<<<< HEAD
 				 <div class="row">
 				   <div class="col-sm-3 d-sm-flex align-items-center">
 					 <label class="m-sm-0">Tube name</label>
@@ -115,6 +120,47 @@ include('server.php');
 					 <input type="text" name="frozendate" value="<?php echo $frozendate; ?>">
 				 </div>
 
+=======
+				 <div class="input-group">
+					 <label>Sample name:</label>
+					 <input type="text" name="samplename" value="<?php echo $samplename; ?>">
+				 </div>
+
+				 <div class="input-group">
+					 <label>Cell Type:</label>
+					 <input type="text" name="celltype" value="<?php echo $celltype; ?>">
+				 </div>
+
+				 <div class="input-group">
+	 				<label for="Storage">Select Storage / Freezer</label>
+	 				<?php
+	 					$sql = "Select * from Storage";
+	 					$result = mysqli_query($db, $sql);
+	 					echo "<select name='unitid'>";
+						echo "<option value='empty'></option>";
+	 					while ($row = mysqli_fetch_array($result)) {
+	 						 echo "<option value='" .$row['idStorage']."'> ".$row['Storagename']. "</option>"; #   We could add this here to print not just Storagename but also location: $row['Location'] .
+	 					}
+	 					echo "</select>";
+	 						?>
+	 			</div>
+
+				 <div class="input-group">
+					 <label>Position:</label>
+					 <input type="text" name="position" value="<?php echo $position; ?>">
+				 </div>
+
+				 <div class="input-group">
+					 <label>Rack:</label>
+					 <input type="text" name="rack" value="<?php echo $rack; ?>">
+				 </div>
+
+				 <div class="input-group">
+					 <label>Frozen on the: </label>
+					 <input type="text" name="frozendate" value="<?php echo $frozendate; ?>">
+				 </div>
+
+>>>>>>> ff05ecd91cf393d8e1c986ae9eb43eaeca013eb5
 				 <div class="input-group">
 					 <label>Select the availability of the tubes</label>
 					 <select name="availability">
@@ -136,10 +182,14 @@ include('server.php');
 			 	</div>
 
 	      <div class="input-group">
+<<<<<<< HEAD
 	   	  	<button type="submit" class="btn btn-success" name="reg_search">Search
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
 			  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
 			</svg></button>
+=======
+	   	  	<button type="submit" class="btn btn-success" name="reg_search">Search</button>
+>>>>>>> ff05ecd91cf393d8e1c986ae9eb43eaeca013eb5
 	   		</div>
 			</div>
 		</form>
