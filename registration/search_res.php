@@ -177,7 +177,7 @@ $table .= "</ol>";
 				</div>
 			</form>
 	</div>
-
+	
 	<?php include('footer.html') ?>
 
 </body>

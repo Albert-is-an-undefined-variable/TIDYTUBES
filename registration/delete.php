@@ -58,34 +58,3 @@ if(isset($_POST['delete_entry'])){
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-<?php
-foreach($ls_idStorages as $idStorage) {
-  $storage_sql = "SELECT * FROM Storage WHERE idStorage = '$idStorage'";
-  $res_storage =mysqli_query($db, $storage_sql) or die(mysqli_error($db));
-    while ($storageEntry = $res_storage->fetch_assoc()){
-      "<h4 value=' "; echo $storageEntry['idStorage']; "'>"; echo $storageEntry['Storagename']; echo "<br>"; "</h4>";
-    }
-}
-
-?>
-
-<div class="input-group">
-  <label for="Storage">Type</label>
-  <?php
-    $sql = "Select * from Storage";
-    $result = mysqli_query($db, $sql);
-    echo "<select name='unitid'>";
-    while ($row = mysqli_fetch_array($result)) {
-       echo "<option value='" .$row['idStorage']."'> ".$row['Storagename'] . "</option>";
-    }
-    echo "</select>";
