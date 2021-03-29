@@ -61,6 +61,7 @@
         margin: 0 auto;
         width: 1000px;
     }
+<<<<<<< HEAD
 
     .videowrapper{
         position: relative;
@@ -82,6 +83,28 @@
 
 <div class="carrousel text-center">
 <h2 style="color: #8072F9;">WHAT OUR COSTUMERS SAY</h2>
+=======
+
+    .videowrapper{
+        position: relative;
+        padding-bottom: 56.25%;
+        padding-top: 0px;
+        height: 0px;
+    }
+
+    .videowrapper iframe{
+        position: absolute;
+        left: 15%;
+        top: 0px;
+        bottom: 0px;
+        height: 70%;
+        width: 70%;
+    }
+</style>
+
+<div class="carrousel text-center">
+<h2 style="color: #8072F9;"  ">WHAT OUR COSTUMERS SAY</h2>
+>>>>>>> main
 <div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
   <!-- Indicators -->
   <ol class="carousel-indicators">
@@ -111,7 +134,11 @@
   .carrousel{
       background-color: #add8e6;
       position: relative;
+<<<<<<< HEAD
       top: -15%;
+=======
+      top: -28%;
+>>>>>>> main
   }
 
   .carousel-control.right, .carousel-control.left {
@@ -255,7 +282,11 @@
 
                       .team{
                           position: relative;
+<<<<<<< HEAD
                           top: -100px;
+=======
+                          top: -250px;
+>>>>>>> main
                       }
 
                       .team-item {

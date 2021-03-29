@@ -85,6 +85,7 @@ if (isset($_POST['reg_entry'])) {
   // receive all input values from the entry form
   $samplename = mysqli_real_escape_string($db, $_POST['samplename']);
   $celltype = mysqli_real_escape_string($db, $_POST['celltype']);
+<<<<<<< HEAD
 
   // $idfreezer = mysqli_real_escape_string($db, $_POST['idfreezer']);
 
@@ -94,6 +95,17 @@ if (isset($_POST['reg_entry'])) {
   $rack = mysqli_real_escape_string($db, $_POST['rack']);
 
 
+=======
+  
+  // $idfreezer = mysqli_real_escape_string($db, $_POST['idfreezer']);
+  
+  
+  $storagename = mysqli_real_escape_string($db, $_POST['Storagename']);
+  $idStorage = mysqli_real_escape_string($db, $_POST['idStorage']);
+  $rack = mysqli_real_escape_string($db, $_POST['rack']);
+  
+  
+>>>>>>> main
   $position = mysqli_real_escape_string($db, $_POST['position']);
   $amount = mysqli_real_escape_string($db, $_POST['amount']);
   $frozendate = mysqli_real_escape_string($db, $_POST['frozendate']);
@@ -113,7 +125,10 @@ if (isset($_POST['reg_entry'])) {
   // Finally, add the new entry in the sample table
   if (count($errors) == 0) {
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
   	$query = "INSERT INTO Sample (Name, Cell_type, idStorage, Rack, Position, Frozendate, Amount, Availability, Comment, idUser)
   			  VALUES('$samplename', '$celltype', '$idStorage', '$rack', '$position', '$frozendate', '$amount', '$availability', '$comment','".$_SESSION["userdata"]["idUser"]."')";
     # print("<br><br><br>");
@@ -145,7 +160,11 @@ if (isset($_POST['reg_entry'])) {
 						<form method="post" action="new_entry.php">
 							<?php include('error.php'); ?>
 							<h2>Enter the details of your sample</h2>
+<<<<<<< HEAD
 
+=======
+              
+>>>>>>> main
 
                                     <div class="row">
                                       <div class="col-sm-3 d-sm-flex align-items-center">
@@ -255,7 +274,11 @@ if (isset($_POST['reg_entry'])) {
 					      <div id="myModal" class="modal fade" role="dialog">
 					            <div class="modal-dialog">
 
+<<<<<<< HEAD
 
+=======
+                        
+>>>>>>> main
 					              <!-- Modal content-->
 					              <div class="modal-content">
 					                <div class="modal-header">
@@ -268,6 +291,7 @@ if (isset($_POST['reg_entry'])) {
 					                </div>
 					              </div>
 					            </div>
+                            </div>
 					          </div>
                           </div>
 
@@ -281,6 +305,21 @@ if (isset($_POST['reg_entry'])) {
 					              </div>
 					            </div>
 					          </div>
+<<<<<<< HEAD
+                          </div>
+
+					                  <h5 class="modal-title">Add new Storage</h5>
+					                </div>
+					                <div class="modal-body">
+					                  <input type="text" name="Storagename" value="<?php echo $storagename; ?>">
+					                  <button type="submit" class="btn btn-success" name="reg_storage">Add</button>
+					                </div>
+
+					              </div>
+					            </div>
+					          </div>
+=======
+>>>>>>> main
 					        </div>
 
 
@@ -331,7 +370,11 @@ if (isset($_POST['reg_entry'])) {
                 </select>
               </div>
 
+<<<<<<< HEAD
 
+=======
+           
+>>>>>>> main
               <!-- CREATE NEW STORAGE ENTRY -->
 							  <button type="button" class="btn" data-toggle="modal" data-target="#myModal">Create new storage</button>
 					      <div id="myModal" class="modal fade" role="dialog">
@@ -350,7 +393,11 @@ if (isset($_POST['reg_entry'])) {
 					                <button type="submit" class="btn btn-success" name="reg_storage">Create new storage</button>
 
 
+<<<<<<< HEAD
 
+=======
+                          
+>>>>>>> main
                  <!-- ADD EXISTING STORAGE-->
                   <button type="button" class="btn" data-toggle="modal" data-target="#myM">Add existing storage</button>
       					    <div id="myM" class="modal fade" role="dialog">
@@ -368,3 +415,8 @@ if (isset($_POST['reg_entry'])) {
       					          </div>
       					        </div>
       					      </div>
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> main
