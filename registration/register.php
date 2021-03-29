@@ -35,22 +35,17 @@ if (isset($_POST['reg_user'])) {
     }
   }
 
+
   // Finally, REGISTER user if there are no errors in the form
   if(array_filter($errors_registration)){
 
   } else {
-
-  	$password = md5($password_1);//encrypt the password before saving in the database
-
-  	$query = "INSERT INTO User (Username, Email, Password)
-  			  VALUES('$username', '$email', '$password')";
-  	mysqli_query($db, $query) or die(mysqli_error($db));
-    $query = "SELECT * FROM User WHERE Username='$username' ";
-    $results = mysqli_query($db, $query);
-  	$_SESSION['username'] = $username;
-  	$_SESSION['success'] = "You are now logged in";
-    $_SESSION['userdata'] = mysqli_fetch_assoc($results);
-  	header('location: index.php');
+      $password = md5($password_1);//encrypt the password before saving in the database
+      $_SESSION['username'] = $username;
+      $_SESSION['email'] = $email;
+      $_SESSION['password'] = $password;
+      $_SESSION['userdata'] = mysqli_fetch_assoc($results);
+  	  header('location: register2.php');
   }
 }
 
@@ -70,37 +65,15 @@ if (isset($_POST['reg_user'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 </head>
 <body>
-    <?php include('header.html') ?>
-
-
-    <!-- <div class="container_menu-bar">
-        <nav class="navbar navbar-default navbar-fixed-top">
-    		<div class="container">
-    			<div class="navbar-header">
-    				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-    					<span class="icon-bar"></span>
-    					<span class="icon-bar"></span>
-    					<span class="icon-bar"></span>
-    				</button>
-    				<a class="navbar-brand" href="index.php">Tidy tubes</a>
-    			</div>
-            </div>
-         </nav>
-  <div class="">
-                  <nav class="navbar navbar-expand-lg navbar-light">
-                <a class="navbar-brand" href="#">
-                    <img src="img/epp.png" width="32" height="28" class="d-inline-block align-top" alt="">ube managment
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-              </nav>
-            </div>
-
-        <div class="hero"> -->
 
 
 	<?php include('error.php'); ?>
+
+    <nav style="background-color: rgba(0,0,0,.2);" class="navbar navbar-light navbar-fixed-top" style="background-color: #45B8AC;">
+    <div class="navbar-header">
+      <a style="color: white;"class="navbar-brand" href="index.html"><img style="width:150px;" src="img/tidytubes.png" alt="Logo"></a></div>
+    </div>
+    </nav>
 
     <!-- resgistration -->
     <br>
@@ -113,7 +86,7 @@ if (isset($_POST['reg_user'])) {
        <div class="row">
          <div class="col-lg-6 m-auto">
            <form method="post" action="register.php" class="password-strength form p-4">
-             <h3 class="form__title text-center mb-4">Please introduce your data</h3>
+             <h3 class="form__title text-center mb-4">CREATE A NEW ACCOUNT</h3>
              <div class="form-group">
 
              <div class="input-group">
@@ -174,11 +147,20 @@ if (isset($_POST['reg_user'])) {
 
 <!-- Style for the login -->
 <style media="screen">
-* {
-  margin: 0;
-  padding: 0;
-  /* box-sizing: border-box; */
+
+body, html {
+    background: #00C9FF;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #92FE9D, #00C9FF);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #92FE9D, #00C9FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    background-color: #E8A87C;
+    margin: 0;
+    padding: 0;
 }
+
 body {
   font-family: 'Muli', sans-serif;
   font-size: 16px;
@@ -213,32 +195,7 @@ body a {
 }
 </style>
 
-
-
-
-  <!-- <form method="post" action="register.php">
-  	<?php include('error.php'); ?>
-  	<div class="input-group">
-  	  <label>Username</label>
-  	  <input type="text" name="username" value="<?php echo $username; ?>">
-  	</div>
-  	<div class="input-group">
-  	  <label>Email</label>
-  	  <input type="email" name="email" value="<?php echo $email; ?>">
-  	</div>
-  	<div class="input-group">
-  	  <label>Password</label>
-  	  <input type="password" name="password_1">
-  	</div>
-  	<div class="input-group">
-  	  <label>Confirm password</label>
-  	  <input type="password" name="password_2">
-  	</div>
-  	<div class="input-group">
-  	  <button type="submit" class="btn" name="reg_user">Register</button>
-  	</div>
-
-  </form> -->
+  </form>
   </div>
   </div>
 

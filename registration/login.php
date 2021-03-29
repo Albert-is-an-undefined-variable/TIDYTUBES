@@ -22,10 +22,9 @@ if (isset($_POST['login_user'])) {
   	$results = mysqli_query($db, $query);
   	if (mysqli_num_rows($results) == 1) {
   	  $_SESSION['username'] = $username;
-  	  $_SESSION['success'] = "You are now logged in";
       $_SESSION['userdata'] = mysqli_fetch_assoc($results);
   	  header('location: index.php');
-  	}else {
+  	} else {
   		$errors_registration['password_1'] = "Wrong username/password combination";
   	}
   }
@@ -48,7 +47,11 @@ if (isset($_POST['login_user'])) {
 </head>
 <body>
 
-
+    <nav style="background-color: rgba(0,0,0,.2);" class="navbar navbar-light navbar-fixed-top" style="background-color: #45B8AC;">
+    <div class="navbar-header">
+      <a style="color: white;"class="navbar-brand" href="index.html"><img style="width:150px;" src="img/tidytubes.png" alt="Logo"></a></div>
+    </div>
+    </nav>
 
 <!-- login -->
 <br>
@@ -101,10 +104,19 @@ if (isset($_POST['login_user'])) {
      <script  src="java.js"></script>
 
 <!-- style login -->
+
     <style media="screen">
-    * {
-      margin: 0;
-      padding: 0;
+    body, html {
+        background: rgb(97,91,205);
+        background: linear-gradient(90deg, rgba(97,91,205,1) 0%, rgba(61,221,183,1) 33%, rgba(0,212,255,1) 100%);
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        padding: 0;
+    }
+
       /* box-sizing: border-box; */
     }
     body {
