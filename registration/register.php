@@ -72,6 +72,7 @@ if (isset($_POST['reg_user'])) {
     <nav style="background-color: rgba(0,0,0,.2);" class="navbar navbar-light navbar-fixed-top" style="background-color: #45B8AC;">
     <div class="navbar-header">
       <a style="color: white;"class="navbar-brand" href="index.html"><img style="width:150px;" src="img/tidytubes.png" alt="Logo"></a></div>
+
     </div>
     </nav>
 
