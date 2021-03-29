@@ -25,12 +25,13 @@ if (isset($_POST['reg_entry'])) {
   // if (empty($amount)) { array_push($errors, "Amount is required"); }
   if (empty($frozendate)) { array_push($errors, "Frozen date is required"); }
 
-  print($idStorage);
+
   // Finally, add the new entry in the sample table
   if (count($errors) == 0) {
   	$query = "INSERT INTO Sample (Name, Cell_type, idStorage, Rack, Position, Frozendate, Amount, Availability, Comment, idUser)
   			  VALUES('$samplename', '$celltype', '$idStorage', '$rack', '$position', '$frozendate', '$amount', '$availability', '$comment','".$_SESSION["userdata"]["idUser"]."')";
-    print($query);
+    # print("<br><br><br>");
+    # print($query);
     mysqli_query($db, $query) or die(mysqli_error($db));
 
   }
@@ -50,6 +51,7 @@ if (isset($_POST['reg_storage'])) {
         mysqli_query($db, $query) or die(mysqli_error($db));
       }
 
+$t = array();
 
 if (isset($_POST['add_storage'])) {
     $Addstorage = mysqli_real_escape_string($db, $_POST['Addstorage']);
@@ -60,8 +62,12 @@ if (isset($_POST['add_storage'])) {
     if(mysqli_num_rows($result_storage) >0){
           $sql = "SELECT * from Storage";
           $res_st = mysqli_query($db,$sql);
-           echo "found";
+          array_push($t,$res_st);
+                    echo "found";
+
+
     }else{
+
    //
    echo "not found";
  }}
@@ -101,13 +107,20 @@ if (isset($_POST['add_storage'])) {
               <div class="input-group">
         				<label for="idStorage">Storage:</label>
                 <?php
-          				echo "<select name='idStorage'>";
-                  while ($row = mysqli_fetch_array($res_st)) {
-                  echo "<option value='" .$row['idStorage']."'> ".$row['Storagename'] . "</option>";
+          				echo "<select name='idStorage'><option disabled selected value> -- select an option -- </option";
+                  $t = array();
+                  echo $t;
+                  #echo "<option disabled selected value> -- select an option -- </option";
+                  foreach ($t as $row) {
+                     echo "<option value='" .$row['idStorage']."'> ".$row['Storagename'] . "</option>";
+
+                  #echo "<option value='" .$row['idStorage']."'> ".$row['Storagename'] . "</option>";
                 }
                 echo "</select>";
            					?>
         			</div>
+
+
 
               <!-- CREATE A FREEEZEEER -->
 
@@ -174,7 +187,7 @@ if (isset($_POST['add_storage'])) {
 								<option value="semiprivat">Semiprivat</option>
 								<option value="public">Public</option>
 							</select>
-  				</div>
+  				  </div>
 
 					<div class="input-group">
   	  			<label>Add a note:</label>

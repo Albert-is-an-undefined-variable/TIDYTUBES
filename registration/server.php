@@ -7,7 +7,8 @@ $email    = "";
 $table ="";       //result table for search
 $keyword = $searchword = "";  //for simple search on index page
 $errors = array();
-$samplename = $celltype = $idfreezer = $rack = $position = $amount = $frozendate = $availability = $comment = $storagename = '';
+$samplename = $celltype = $idfreezer = $rack = $position = $amount = $frozendate = $availability = $comment = '';
+$idStorage = $storagename = $location = "";
 $errors_registration = array('username' => '', 'email' => '', 'password_1' => '', 'password_2' => '');
 // connect to the database
 # $db = mysqli_connect('localhost', 'albert', '/Puiyuaru1616', 'mydb');   # albert pw
@@ -66,8 +67,6 @@ $db = mysqli_connect('localhost', 'tidytubes', 'Welcome123%', 'mydb');    # jo &
     //}
     //echo "</table>";
   //}
-
-
 
 
 

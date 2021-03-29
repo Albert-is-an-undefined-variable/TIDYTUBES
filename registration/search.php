@@ -37,19 +37,18 @@ include('server.php');
 				 </div>
 
 				 <div class="input-group">
-	 				<label for="Storagename">Select Storage</label>
-	 				<?php
-	 					$sql = "Select * from Storage";
-	 					$result = mysqli_query($db, $sql);
-	 					echo "<select name='Storagename'>";
-						echo "<option value='empty'></option>";
-	 					while ($row = mysqli_fetch_array($result)) {
-	 						 echo "<option value='" .$row['idStorage']."'> ".$row['Storagename']. "</option>"; #   We could add this here to print not just Storagename but also location: $row['Location'] .
-	 					}
-	 					echo "</select>";
-	 						?>
-	 			</div>
-
+					 <label for="idStorage">Storage:</label>
+					 <?php
+						 $sql = "Select * from Storage";
+						 $result = mysqli_query($db, $sql);
+						 echo "<select name='idStorage'>";
+						 while ($row = mysqli_fetch_array($result)) {
+								echo "<option value='" .$row['idStorage']."'> ".$row['Storagename'] . "</option>";
+						 }
+						 echo "</select>";
+							 ?>
+				 </div>
+				 
 				 <div class="input-group">
 					 <label>Position:</label>
 					 <input type="text" name="position" value="<?php echo $position; ?>">
@@ -95,3 +94,13 @@ include('server.php');
 
  </body>
  </html>
+
+
+ <div class="input-group">
+	 <label>Select the availability for your tubes</label>
+	 <select name="availability">
+		 <option value="privat">Privat</option>
+		 <option value="semiprivat">Semiprivat</option>
+		 <option value="public">Public</option>
+	 </select>
+ </div>
