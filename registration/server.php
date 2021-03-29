@@ -5,18 +5,18 @@ session_start();
 $username = "";
 $email    = "";
 $table ="";       //result table for search
-$keyword = $searchword ="";  //for simple search on index page
+$keyword = $searchword = "";  //for simple search on index page
 $errors = array();
-<<<<<<< HEAD
+
 $samplename = $celltype = $idfreezer = $rack = $position = $amount = $frozendate = $availability = $comment = $Location = $Contact_email = $Full_name = $Contact_phone = $Position = $Main_task = $Find_me = $Institute = '';
 $errors_registration = array('username' => '', 'email' => '', 'password_1' => '', 'password_2' => '', 'fullname' => '', 'cemail' => '', 'cphone' => '');
-=======
-$samplename = $celltype = $idfreezer = $rack = $position = $amount = $frozendate = $availability = $comment = $Location = '';
-$errors_registration = array('username' => '', 'email' => '', 'password_1' => '', 'password_2' => '');
->>>>>>> ff05ecd91cf393d8e1c986ae9eb43eaeca013eb5
-// connect to the database
-$db = mysqli_connect('localhost', 'albert', '/Puiyuaru1616', 'mydb');
 
+$idSample = $samplename = $celltype = $idfreezer = $rack = $position = $amount = $frozendate = $availability = $idOwner = $comment = '';
+$idStorage = $storagename = $location = "";
+
+// connect to the database
+# $db = mysqli_connect('localhost', 'albert', '/Puiyuaru1616', 'mydb');   # albert pw
+$db = mysqli_connect('localhost', 'tidytubes', 'Welcome123%', 'mydb');    # jo & lili pw
 
 
 // NEW SEARCH
@@ -72,22 +72,6 @@ $db = mysqli_connect('localhost', 'albert', '/Puiyuaru1616', 'mydb');
     //echo "</table>";
   //}
 
-
-if (isset($_POST['reg_storage'])) {
-  #print_r("<br><br><br><br><br><br>");
-  #printf("INSIDE STORAGE");
-  $location = mysqli_real_escape_string($db, $_POST['Location']);
-  print($location);
-  if (empty($location)) { array_push($errors, "ID storage is required"); }
-  if (count($errors) == 0) {
-  	$query = "INSERT INTO Storage (Location)
-  			  VALUES ('$location')";
-        }
-        #print($query);
-        mysqli_query($db, $query) or die(mysqli_error($db));
-
-
-      }
 
 
 

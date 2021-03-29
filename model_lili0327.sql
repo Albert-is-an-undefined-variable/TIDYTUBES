@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Sample` (
   `Name` VARCHAR(45) NULL,
   `Cell_type` VARCHAR(45) NULL,
   `Frozendate` VARCHAR(45) NULL,
+  `Amount` INT NULL,
   `Availability` VARCHAR(45) NULL,
   `Comment` VARCHAR(300) NULL,
   `Position` VARCHAR(45) NULL,
