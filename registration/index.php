@@ -20,7 +20,9 @@
 </head>
 <body>
     <div class="jumbotron text-center" style="margin-bottom: 0px;">
-        <h1>Home page</h1>
+        <h1>Home page <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+          <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+        </svg></h1>
         <p>We declare war to chaos! Find your tubes:</p>
         <form class="form-inline">
             <div class="input-group">
@@ -34,8 +36,40 @@
 
 <?php include('header.html') ?>
 
+<!-- VIDEO TUTORIAL -->
+<div class="Wrapper text-center">
+    <h1  style="color: #8072F9;" >FIRST TIME? LET US SHOW YOU HOW IT WORKS</h1>
+    <div class="videowrapper">
+ <iframe width="560" height="315" src="https://www.youtube.com/embed/c1s3Iekns9k" title="YouTube video player"
+ frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>    </div>
+</div>
 
-<h2>What our customers say</h2>
+<style media="screen">
+
+    .wrapper{
+        margin: 0 auto;
+        width: 1000px;
+    }
+
+    .videowrapper{
+        position: relative;
+        padding-bottom: 56.25%;
+        padding-top: 0px;
+        height: 0px;
+    }
+
+    .videowrapper iframe{
+        position: absolute;
+        left: 15%;
+        top: 0px;
+        bottom: 0px;
+        height: 70%;
+        width: 70%;
+    }
+</style>
+
+<div class="carrousel text-center">
+<h2 style="color: #8072F9;"  ">WHAT OUR COSTUMERS SAY</h2>
 <div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
   <!-- Indicators -->
   <ol class="carousel-indicators">
@@ -56,6 +90,45 @@
       <h4>"As we say in spanish..."Como vaya y lo encuentre yo verás!"<br><span style="font-style:normal;">My mother</span></h4>
     </div>
   </div>
+</div>
+
+
+<!-- CARROUSEL STYLE -->
+<style media="screen">
+
+  .carrousel{
+      background-color: #add8e6;
+      position: relative;
+      top: -28%;
+  }
+
+  .carousel-control.right, .carousel-control.left {
+    background-image: none;
+    color: #f4511e;
+  }
+
+  .carousel-indicators li {
+    border-color: #f4511e;
+  }
+
+  .carousel-indicators li.active {
+    background-color: #f4511e;
+  }
+
+  .item h4 {
+    font-size: 19px;
+    line-height: 1.375em;
+    font-weight: 400;
+    font-style: italic;
+    margin: 70px 0;
+  }
+
+  .item span {
+    font-style: normal;
+  }
+
+</style>
+
 
   <!-- Left and right controls -->
   <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
@@ -67,26 +140,13 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
-
-   <div class="content">
-  	  <!-- notification message -->
-  	   <?php if (isset($_SESSION['success'])) : ?>
-         <div class="error success" >
-      	    <h3>
-              <?php
-          	   echo $_SESSION['success'];
-          	    unset($_SESSION['success']);
-                ?>
-      	    </h3>
-          </div>
-  	     <?php endif ?>
-
            <!-- meet the team -->
           <div class="container">
+              <div class="team">
                   <div class="row">
                       <div class="col-12">
                           <div class="section-title title-left text-center text-lg-left">
-                              <h3 class="top-sep">Meet Our Team</h3>
+                              <h2 style="color: #8072F9;" class="top-sep">MEET OUR TEAM</h3>
                               <p>You can explore our personal websites or social networks to know us better! <h6>...ejem.ejem..stalker..ejem</h6></p>
                           </div>
                       </div>
@@ -173,8 +233,158 @@
                               </div>
                           </div>
                       </div>
+                  </div>
                       <br>
                       <br>
+
+                    <!-- STYLE TEAM CARDS -->
+
+                      <style media="screen">
+
+                      .team{
+                          position: relative;
+                          top: -250px;
+                      }
+
+                      .team-item {
+                        padding: 35px;
+                        padding-right: 0;
+                        position: relative;
+                        z-index: 0;
+                      }
+
+                      .team-item:after, .team-item:before {
+                        content: "";
+                        position: absolute;
+                        -webkit-box-shadow: 0 5px 30px 0 rgba(39, 39, 39, 0.15);
+                                box-shadow: 0 5px 30px 0 rgba(39, 39, 39, 0.15);
+                        border-radius: 10px;
+                        z-index: -1;
+                      }
+
+                      .team-item:before {
+                        height: 100%;
+                        background-color: #fff;
+                        left: 0;
+                        top: 0;
+                        right: 30px;
+                        -webkit-transition: all 0.3s ease;
+                        transition: all 0.3s ease;
+                      }
+
+                      .team-item:after {
+                        height: 6px;
+                        width: calc(100% - 30px);
+                        background-color: #4e63d7;
+                        left: 0;
+                        bottom: 0;
+                        -webkit-transition: all 0.3s linear;
+                        transition: all 0.3s linear;
+                      }
+
+                      .team-item:hover:after {
+                        height: 100%;
+                      }
+
+                      .team-item .img-holder {
+                        -ms-flex-negative: 0;
+                            flex-shrink: 0;
+                        -webkit-box-shadow: 0 0 20px 0 rgba(51, 51, 51, 0.2);
+                                box-shadow: 0 0 20px 0 rgba(51, 51, 51, 0.2);
+                        border-radius: 10px;
+                        width: calc(100% - 70px);
+                        margin-left: 70px;
+                        overflow: hidden;
+                      }
+
+                      .team-item .img-holder img {
+                        border-radius: 10px;
+                        width: 100%;
+                        -webkit-transform: scale(1.1);
+                                transform: scale(1.1);
+                        -webkit-transition: all 0.6s ease;
+                        transition: all 0.6s ease;
+                      }
+
+                      .team-item:hover .img-holder img {
+                        -webkit-transform: scale(1);
+                                transform: scale(1);
+                      }
+
+                      .team-item .socials {
+                        position: absolute;
+                      }
+
+                      .team-item .socials a {
+                        display: block;
+                        margin-right: 0;
+                        margin-bottom: 15px;
+                        -webkit-box-shadow: 0 3px 2px 0 rgba(0, 0, 0, 0.12);
+                                box-shadow: 0 3px 2px 0 rgba(0, 0, 0, 0.12);
+                      }
+
+                      .team-item .socials a:last-of-type {
+                        margin-bottom: 0;
+                      }
+
+                      .team-item .team-content {
+                        margin-right: 70px;
+                        text-align: center;
+                      }
+
+                      .team-item .team-content h5 {
+                        color: #101f41;
+                        -webkit-transition: all 0.4s ease;
+                        transition: all 0.4s ease;
+                      }
+
+                      .team-item .team-content p {
+                        color: #4e63d7;
+                        -webkit-transition: all 0.4s ease;
+                        transition: all 0.4s ease;
+                        font-weight: 600;
+                        font-size: 14px;
+                      }
+
+                      .team-item:hover .team-content h5, .team-item:hover .team-content p {
+                        color: #fff;
+                        -webkit-transition: all 0.3s ease;
+                        transition: all 0.3s ease;
+                      }
+
+                      .d-inline-block {
+                          display: inline-block!important;
+                      }
+
+                      .socials a {
+                          width: 35px;
+                          height: 35px;
+                          background-color: #6893e1;
+                          border-radius: 50%;
+                          -webkit-box-shadow: 0 3px 2px 0 #516cd9;
+                          box-shadow: 0 3px 2px 0 #516cd9;
+                          text-align: center;
+                          color: #fff;
+                          padding-top: 10px;
+                          font-size: 16px;
+                          margin-right: 10px;
+                          -webkit-transition: all 0.3s ease;
+                          transition: all 0.3s ease;
+                      }
+
+                      .mb-2, .my-2 {
+                          margin-bottom: .5rem!important;
+                      }
+
+                      h5 {
+                          font-size: 21px;
+                      }
+
+                      .mb-30 {
+                          margin-bottom: 30px;
+                      }
+
+                      </style>
 
                       <?php include('footer.html') ?>
 

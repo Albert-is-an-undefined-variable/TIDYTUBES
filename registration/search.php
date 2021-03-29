@@ -1,51 +1,150 @@
+<?php
+include('server.php');
+?>
+
+<!-- COMMENT LILI: 		This page only contains the search form.
+											The php script with the sql search is in search_res
+											where the reuslts are displayed 											-->
+
 <!DOCTYPE html>
 <html>
 <head>
-	<title>New Search</title>
+	<title>Advanced Search</title>
 
 </head>
 <body>
-
 	<?php include('header.html') ?>
 
-   <div class="hero">
-     <div class="jumbotron text-center" style="margin-bottom: 0px;">
-         <h1>New Search</h1>
-         <p>Give us some hints and we're going to find what you need</p>
-     </div>
-     <form action="search.php" method="post">
-       <div class="input-group">
-         <label>Sample name: </label>
-         <input type="text" name="search" value="">
-       </div>
-       <div class="input-group">
-         <label>Choose a freezer: </label>
+  <div class="hero">
+    <div class="jumbotron text-center" style="margin-bottom: 0px;">
+         <h1>Advanced Search <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+	   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+	 </svg></h1>
+         <p>Can't find your cells? I bet, we can!</p>
+    </div>
 
-       </div>
-       <div class="input-group">
-   	  	<button type="submit" class="btn" name="reg_entry">search</button>
-   		</div>
+  	<form method="post" action="search_res.php">
+			 <?php include('error.php'); ?>
+			 <div class="container">
+				 <h2>Enter the Details of your Search</h2>
 
-</form>
+				 <div class="row">
+				   <div class="col-sm-3 d-sm-flex align-items-center">
+					 <label class="m-sm-0">Tube name</label>
+					 <input
+					   type="text"
+					   name="samplename"
+					   class="form-control ml-sm-2"
+					   placeholder="E.coli"
+					   value="<?php echo $samplename; ?>"
+					 >
+				 </div>
+				 <div class="col-sm-3 d-sm-flex align-items-center">
+				   <label class="m-sm-0">Cell type</label>
+				   <input
+					 type="text"
+					 name="celltype"
+					 class="form-control ml-sm-2"
+					 placeholder="MDCK"
+					 value="<?php echo $celltype; ?>"
+					 >
+				 </div>
+
+				 </div>
+				 <div class="col-sm-3 d-sm-flex align-items-center">
+					 <label class="m-sm-0">Owner</label>
+					 <select class="custom-select"
+						 <option selected>Private</option>
+						 <option value="1">Private</option>
+						 <option value="2">Ask me first</option>
+						 <option value="3">Public</option>
+					   </select>
+				 </div>
+			 </div>
+
+			 <div class="row">
+			 <div class="col-sm-3 d-sm-flex align-items-center">
+			   <label class="m-sm-0">Position</label>
+			   <input
+				 type="text"
+				 name="position"
+				 class="form-control ml-sm-2"
+				 placeholder="rack 9 - 7A "
+				 value="<?php echo $position; ?>"
+				 >
+			 </div>
+
+			 <div class="col-sm-3 d-sm-flex align-items-center">
+			   <label class="m-sm-0">Rack</label>
+			   <input
+				 type="text"
+				 name="celltype"
+				 class="form-control ml-sm-2"
+				 placeholder="MDCK"
+				 value="<?php echo $celltype; ?>"
+				 >
+			 </div>
+
+			 <div class="col-sm-3 d-sm-flex align-items-center">
+			   <label class="m-sm-0">Date</label>
+			   <input
+				 type="text"
+				 name="frozendate"
+				 class="form-control ml-sm-2"
+				 placeholder="dd/mm/yyyy"
+				 value="<?php echo $frozendate;?>"
+				 >
+			 </div>
+
+			 <div class="input-group">
+				 <br>
+
+
+			</div>
+
+
+
+
+				 <div class="input-group">
+					 <label>Rack:</label>
+					 <input type="text" name="rack" value="<?php echo $rack; ?>">
+				 </div>
+
+				 <div class="input-group">
+					 <label>Frozen on the: </label>
+					 <input type="text" name="frozendate" value="<?php echo $frozendate; ?>">
+				 </div>
+
+				 <div class="input-group">
+					 <label>Select the availability of the tubes</label>
+					 <select name="availability">
+						 <option value="empty"></option>
+						 <option value="privat">Privat</option>
+						 <option value="semiprivat">Semiprivat</option>
+						 <option value="public">Public</option>
+					 </select>
+			 	</div>
+
+				<div class="input-group">
+					<label>Quantity of tubes:</label>
+					<input type="number" name="amount" value="<?php echo $amount; ?>">
+				</div>
+
+				 <div class="input-group">
+					 <label>Keyword in Comment:</label>
+					 <textarea input type="text" rows="10" cols="50" name="comment" value="<?php echo $comment; ?>"></textarea>
+			 	</div>
+
+	      <div class="input-group">
+	   	  	<button type="submit" class="btn btn-success" name="reg_search">Search
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+			  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+			</svg></button>
+	   		</div>
+			</div>
+		</form>
+	</div>
+		<?php include('footer.html') ?>
+
  </body>
  </html>
-
- <?php
- if (isset($_POST['reg_entry'])) {
- $search_value=$_POST["search"];
- $con=new mysqli("localhost","tidytubes","Welcome123%","mydb");
- if($con->connect_error){
-     echo 'Connection Faild: '.$con->connect_error;
-     }else{
-         $sql="select * from sample where samplename like '%$search_value%'";
-
-         $res=$con->query($sql);
-
-         while($row=$res->mysqli_fetch_assoc()){
-             echo 'Samplename:  '.$row["idfreezer"];
-
-
-             }
-
-         }}
- ?>
