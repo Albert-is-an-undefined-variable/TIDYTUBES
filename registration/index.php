@@ -24,15 +24,26 @@
           <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
         </svg></h1>
         <p>We declare war to chaos! Find your tubes:</p>
-        <form class="form-inline">
+
+        <form class="form-inline" method="post" action="search_res.php">
             <div class="input-group">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" required>
-                <div class="input-group-btn">
-                    <button class="btn btn-success" type="submit">Search</button>
-                </div>
+                <input class="form-control mr-sm-2" name="keyword" type="text" placeholder="Search" value="<?php echo $keyword; ?>" required>
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-success" name="simple_search">Search</button>
+                  </div>
             </div>
         </form>
+
+        <form class="form-inline" method="post" action="search_res.php">
+            <div class="input-group">
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-success" name="my_entries">Show all my Tubes</button>
+                  </div>
+            </div>
+        </form>
+
     </div>
+
 
 <?php include('header.html') ?>
 
@@ -50,6 +61,7 @@
         margin: 0 auto;
         width: 1000px;
     }
+<<<<<<< HEAD
 
     .videowrapper{
         position: relative;
@@ -58,6 +70,16 @@
         height: 0px;
     }
 
+=======
+
+    .videowrapper{
+        position: relative;
+        padding-bottom: 56.25%;
+        padding-top: 0px;
+        height: 0px;
+    }
+
+>>>>>>> b24ebe5f24e7e7e98a88ef63f91117daca187739
     .videowrapper iframe{
         position: absolute;
         left: 15%;
