@@ -11,19 +11,12 @@ include('server.php');
 if (isset($_POST['simple_search'])) {
 	$searchword = mysqli_real_escape_string($db, $_POST['keyword']); //keyword by user
 	// create search query with keyword
-	// $query = "SELECT *
-	// 					FROM Sample
-	// 					Where ( Name, Cell_type, Frozendate, Availability, Comment) LIKE '%$searchword%'";
-	// 					// OR Cell_type LIKE '%$searchword%'
-	// 					// OR Frozendate LIKE '%$searchword%'
-	// 					// OR Availability LIKE '%$searchword%'
-	// 					// OR Comment LIKE '%$searchword%'
-
-
+	$query = "SELECT *
+						FROM Sample
+						WHERE ( IF (LENGTH ('$searchword') > 0, Name LIKE '%$searchword%', 0))
+						'";
 	// print("<br><br><br>");
-	print("<br><br><br>");
-	print($query);
-
+	// print($query);
 
 } // ADVANCED SEARCH -------------------------------------------------------------
 elseif (isset($_POST['reg_search'])) {
@@ -51,46 +44,66 @@ elseif (isset($_POST['reg_search'])) {
 						OR IF(LENGTH('$amount') > 0, Amount LIKE '%$amount%' , 0)
 						OR IF(LENGTH('$comment') > 0, Comment LIKE '%$comment%' , 0)
 					)";
-	//print($query);
+	// print("<br><br><br>");
+	// print($query);
+} // USER ENTRIES -------------------------------------------------------------
+elseif (isset($_POST['my_entries'])) {
+	$idUser = $_SESSION["userdata"]["idUser"];
+
+	$query = "SELECT *
+						FROM Sample
+						WHERE idUser = '$idUser' ";
+
 } else {
 	echo "Something went wrong! Please try again";
 };
 
 //search in db
 $results = mysqli_query($db, $query) or die(mysqli_error($db));
-// print ($query);
 
 // GENERATE RESULT TABLE AND STORE IN '$table'
+# When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by Storage
 if ($results->num_rows > 0) {
-
 	echo "<table border='1' cellspacing='5' cellpadding='4' id='resultTable' style='width:80%'>
 					<thead>
 						<tr>
-							<th>Name</th>
-							<th>Cell Type</th>
-							<th>Freezer name</th>
-							<th>Freezer Location</th>
-							<th>Rack</th>
-							<th>Position</th>
-							<th>Date</th>
-							<th>Amount</th>
-							<th>Availability</th>
-							<th>Comment</th>
-							<th>Delete</th>
+							<th onclick='sortTable(0)'>Name</th>
+							<th onclick='sortTable(1)'>Cell Type</th>
+							<th onclick='sortTable(2)'>Freezer name</th>
+							<th onclick='sortTable(3)'>Freezer Location</th>
+							<th onclick='sortTable(4)'>Rack</th>
+							<th onclick='sortTable(10)'>Position</th>
+							<th onclick='sortTable(5)'>Date</th>
+							<th onclick='sortTable(6)'>Amount</th>
+							<th onclick='sortTable(7)'>Availability</th>
+							<th onclick='sortTable(8)'>Owner</th>
+							<th onclick='sortTable(9)'>Comment</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>";
 
 	while($row = $results->fetch_assoc()) {
-		// query search for the storage table
-
+		$idSample = $row["idSample"];
+		// GET STORAGE INFO
+		$idStorage = $row["idStorage"]; // get Owner Id for current Sample
 		$queryStorage = "SELECT * FROM Storage WHERE idStorage = $idStorage";
-		$resultsStorage = mysqli_query($db, $queryStorage) or die(mysqli_error($db));
 
+		$resultsStorage = mysqli_query($db, $queryStorage) or die(mysqli_error($db));
 		while($storage = $resultsStorage->fetch_assoc()){
 			$storagename = $storage["Storagename"];
 			$location = $storage["Location"];
 		}
+
+		// GET USER INFO
+		$idOwner = $row["idUser"]; // get Owner Id for current Sample
+		//get Info on Owner
+		$queryOwner = "SELECT * FROM User WHERE idUser = $idOwner";
+		$resultsOwner = mysqli_query($db, $queryOwner) or die(mysqli_error($db));
+		while($Owner = $resultsOwner->fetch_assoc()){
+			$idOwner = $Owner["Username"];
+		}
+		// $idSample = echo $row["idSample"];
 
 		$table .= "<tr>";
 		$table .= "<td>" . $row["Name"] . "</td>";
@@ -102,29 +115,19 @@ if ($results->num_rows > 0) {
 		$table .= "<td>" . $row["Frozendate"] . "</td>";
 		$table .= "<td>" . $row["Amount"] . "</td>";
 		$table .= "<td>" . $row["Availability"] . "</td>";
+		$table .= "<td>" . $idOwner . "</td>";
 		$table .= "<td>" . $row["Comment"] . 	"</td>";
-		$table .= "<td class='delete_entry'>
-								<form action = 'delete_entry' method='post'>
-									<input type='hidden' name='idSample' value="; echo $row["idSample"] ; ">
-									<input type='submit' name='submit_delete' value='Delete'>
-								</form>
-							</td>";
+		$table .=	"<td> <form action=delete.php?id method='post'>
+										<input type='submit' name='delete_entry' id='rowDelete' value='Delete' />
+										<input type='hidden' name='idSample' value="; echo $row["idSample"]; "/>
+		            </form>
+		          </td>";
 		$table .= "</tr>";
 	}
 	$table .= "</tbody> </table>";
 
 }
 $table .= "</ol>";
-
-// // DELETE AN ENTRY
-// if (isset($_POST['delete_entry'])) {
-// 	$queryDelete = "DELETE FROM Sample WHERE idSample = $idSample"
-// 	$
-// }
-//
-// 	//Define the query
-// 	$query = "DELETE FROM Sample WHERE idSample={$_POST['idSample']}";
-
 
 ?>
 <!DOCTYPE html>
@@ -146,6 +149,7 @@ $table .= "</ol>";
 			<h2>Search Results</h2>
 			<div class="content">
 				<h4>Entries matching your Search: <?= mysqli_num_rows($results) ?></h4>
+				<p>Sort Entries by clicking Header</p>
 			</div>
 			<!-- RESULT TABLE -->
 			<div>
@@ -163,4 +167,51 @@ $table .= "</ol>";
 	<?php include('footer.html') ?>
 
 </body>
+
+<script>
+function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("resultTable");
+  switching = true; // Set the sorting direction to ascending:
+  dir = "asc";
+	/* Make a loop that will continue until no switching has been done: */
+  while (switching) { // Start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /* Loop through all table rows (except the first, which contains table headers): */
+    for (i = 1; i < (rows.length - 1); i++) { // Start by saying there should be no switching:
+      shouldSwitch = false;
+      /* Get the two elements you want to compare, one from current row and one from the next: */
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /* Check if the two rows should switch place, based on the direction, asc or desc: */
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) { // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) { // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /* If a switch has been marked, make the switch and mark that a switch has been done: */
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      // Each time a switch is done, increase this count by 1:
+      switchcount ++;
+    } else {
+      /* If no switching has been done AND the direction is "asc", set the direction to "desc" and run the while loop again. */
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+</script>
+
 </html>
