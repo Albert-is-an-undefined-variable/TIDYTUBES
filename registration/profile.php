@@ -1,34 +1,45 @@
 <?php include('server.php');
+$query = "SELECT * FROM User WHERE Username='".$_SESSION["username"]."' ";
+$results = mysqli_query($db, $query) or die(mystringsqli_error($db));
+while($row = $results->fetch_assoc()) {
+    $Full_name = $row["Full_name"];
+    $Position = $row["Position"];
+    $Main_task = $row["Main_task"];
+    $Contact_email = $row["Contact_email"];
+    $Contact_phone = $row["Contact_phone"];
+    $Institute = $row["Institute"];
+    $Find_me = $row["Find_me"];
 
-if(isset($_POST['submit'])){
-        $ptofile_pic= $_FILES['file'];
-
-        $file_name = $_FILES['file']['name'];
-        $file_tmp_name = $_FILES['file']['tmp_name'];
-        $file_size= $_FILES['file']['size'];
-        $file_type = $_FILES['file']['error'];
-        $file_error = $_FILES['file']['type'];
-
-        $fileEXT = explode('.', $filename);
-        $file_actual_EXT = strtolower(end($fileEXT));
-
-        $allowed = array('jpg', 'jpeg', 'png' );
-
-        if(in_array($file_actual_EXT, $allowed)){
-            if ($file_error === 0) {
-                if ($file_size < 100000){
-                    $file_new_name = uniqid( '', true).".".$file_actual_EXT;
-                    $file_destination = '';
-                } else {
-                    echo "The file file is WAY TOO BIG OMG";
-                }
-            } else {
-            echo "The file coudnt been uploaded";
-            }
-        } else
-
-        echo "This type of file is not allowed";
 }
+// if(isset($_POST['submit'])){
+//         $ptofile_pic= $_FILES['file'];
+//
+//         $file_name = $_FILES['file']['name'];
+//         $file_tmp_name = $_FILES['file']['tmp_name'];
+//         $file_size= $_FILES['file']['size'];
+//         $file_type = $_FILES['file']['error'];
+//         $file_error = $_FILES['file']['type'];
+//
+//         $fileEXT = explode('.', $filename);
+//         $file_actual_EXT = strtolower(end($fileEXT));
+//
+//         $allowed = array('jpg', 'jpeg', 'png' );
+//
+//         if(in_array($file_actual_EXT, $allowed)){
+//             if ($file_error === 0) {
+//                 if ($file_size < 100000){
+//                     $file_new_name = uniqid( '', true).".".$file_actual_EXT;
+//                     $file_destination = '';
+//                 } else {
+//                     echo "The file file is WAY TOO BIG OMG";
+//                 }string
+//             } else {
+//             echo "The file coudnt been uploaded";
+//             }
+//         } else
+//
+//         echo "This type of file is not allowed";
+// }
 
 ?>
 
@@ -38,24 +49,30 @@ if(isset($_POST['submit'])){
     <head>
         <meta charset="utf-8">
         <title></title>
-        <link rel="stylesheet" type="text/css" href="index.css">
-        <!-- <link rel="stylesheet" type="text/css" href="estilo.css"> -->
-
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <!-- jquery -->
-        <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-        CSS
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-        JS
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script> -->
-    </head>
     <body>
         <?php include('header.html') ?>
         <br>
 <br>
 <br>
+<<<<<<< HEAD
+<div class="container">
+    <div class="sidebar">
+        <div class="sidebar-top">
+            <img class="profile-image" src="img/Albert.jpeg" />
+            <div class="profile-basic">
+                <h1 class="name"><?php echo $Full_name; ?></h1>
+                <h4 class="designation"> <?php echo $Position; ?></h4>
+            </div>
+        </div>
+        <div class="profile-info">
+            <p class="key"> Main task: </p>
+            <p class="value"><?php echo $Main_task; ?></p>
+        </div>
+        <div class="profile-info">
+            <p class="key">Contact phone : </p>
+            <p class="value"><?php echo $Contact_phone; ?></p>
+        </div>
+=======
 
         <div id="user-profile-2" class="user-profile">
             <div class="tabbable">
@@ -812,52 +829,131 @@ border-bottom: 1px solid #E8E8E8
     min-width: 33.333%
 }
 }
+>>>>>>> ff05ecd91cf393d8e1c986ae9eb43eaeca013eb5
 
-.itemdiv.memberdiv>.user>img {
-border-color: #DCE3ED
+        <div class="profile-info">
+            <p class="key" >Contact email : </p>
+            <p class="value" ><?php echo $Contact_email; ?></p>
+        </div>
+
+        <div class="profile-info">
+            <p class="key" >Usually you can find me... </p>
+            <p><?php echo $Find_me; ?>
+            </p>
+        </div>
+
+        <div class="profile-info">
+            <p class="key" >Institution / Research group: <br> </p>
+            <p class="value" > <?php echo $Institute; ?><br/>
+            </p>
+        </div>
+        <div class="profile-info">
+            <p class="key" >Change profile picture: </p>
+        <form class="text-left" action="upload.php" method="post" enctype="multipart/form-data">
+            <input type="file" name="" value="">
+            <button class="btn btn-success text-center" type="submit" name="submit">UPLOAD</button>
+        </form>
+    </div>
+
+    </div>
+
+    <div class="content">
+        <div class="work-experience">
+            <h1 class="heading"> MY STUFF</h1>
+            <div class="info">
+                <p class="sub-heading">My storages</p>
+                <p>dsfcgv</p>
+            </div>
+            <div class="info">
+                <p class="sub-heading">My lab groups</p>
+                <p>asdsf</p>
+            </div>
+            <div class="info">
+                <p class="sub-heading">My tubes</p>
+                <p>yep</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style media="screen">
+
+    .sidebar {
+        width:30%;
+        display: inline-block;
+        margin-left: 0;
+        background: #5da4d9;
+        color: white;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    .sidebar-top { position: relative; }
+
+    .profile-basic {
+        position: absolute;
+        bottom: 0px;
+        left: 50px;
+    }
+
+    .profile-info {
+        padding: 20px 10px;
+        border-bottom: 1px solid #4783c2;
+    }
+
+     .profile-info p{
+        margin-left: 10px;
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    .profile-info .key{
+        font-weight: bold;
+    }
+
+    .profile-info .value{
+    }
+
+    .social-media:hover{
+        cursor: pointer;
+        color: white;
+    }
+
+    .content {
+        width: 65%;
+        margin-left: 2%;
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    .work-experience, .education {
+        margin-bottom: 30px;
+        padding: 5% 2% 5% 10%;
+        background: white;
+        box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+    }
+
+    .info {
+        padding: 2% 1%;
+        border-bottom: 1px solid #bdbdbd;
+    }
+
+
+    .sub-heading {
+  font-weight: bold;
 }
 
-.itemdiv.memberdiv>.body>.time {
-position: static
-}
+    .duration {
+        color: #5da4d9;
+        font-size:12px;
+    }
 
-.itemdiv.memberdiv>.body>.name {
-line-height: 18px;
-height: 18px;
-margin-bottom: 0
-}
+</style>
 
-.itemdiv.memberdiv>.body>.name>a {
-display: inline-block;
-max-width: 100px;
-max-height: 18px;
-overflow: hidden;
-text-overflow: ellipsis;
-word-break: break-all
-}
-
-.itemdiv .tools {
-position: absolute;
-right: 5px;
-bottom: 10px;
-display: none
-}
-
-.item-list>li>.checkbox,
-.item-list>li>label.inline,
-.itemdiv:hover .tools {
-display: inline-block
-}
-
-.itemdiv .tools .btn {
-border-radius: 36px;
-margin: 1px 0
-}
-
-.itemdiv .body .tools {
-bottom: 4px
-}
-
+<<<<<<< HEAD
+=======
 .itemdiv.commentdiv .tools {
 right: 9px
 }
@@ -1874,6 +1970,7 @@ max-width: 26rem;
             <input type="file" name="" value="">
             <button type="submit" name="submit">UPLOAD</button>
         </form>
+>>>>>>> ff05ecd91cf393d8e1c986ae9eb43eaeca013eb5
         <?php include('footer.html') ?>
 
 

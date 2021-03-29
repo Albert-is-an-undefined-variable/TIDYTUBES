@@ -20,7 +20,9 @@
 </head>
 <body>
     <div class="jumbotron text-center" style="margin-bottom: 0px;">
-        <h1>Home page</h1>
+        <h1>Home page <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+          <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+        </svg></h1>
         <p>We declare war to chaos! Find your tubes:</p>
 
         <form class="form-inline" method="post" action="search_res.php">
@@ -149,20 +151,6 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
-
-   <div class="content">
-  	  <!-- notification message -->
-  	   <?php if (isset($_SESSION['success'])) : ?>
-         <div class="error success" >
-      	    <h3>
-              <?php
-          	   echo $_SESSION['success'];
-          	    unset($_SESSION['success']);
-                ?>
-      	    </h3>
-          </div>
-  	     <?php endif ?>
-
            <!-- meet the team -->
           <div class="container">
               <div class="team">
