@@ -11,10 +11,12 @@ include('server.php');
 if (isset($_POST['simple_search'])) {
 	$searchword = mysqli_real_escape_string($db, $_POST['keyword']); //keyword by user
 	// create search query with keyword
+
 	$query = "SELECT *
 						FROM Sample
 						WHERE ( IF (LENGTH ('$searchword') > 0, Name LIKE '%$searchword%', 0))
 						'";
+
 
 } // ADVANCED SEARCH -------------------------------------------------------------
 elseif (isset($_POST['reg_search'])) {
@@ -43,6 +45,7 @@ elseif (isset($_POST['reg_search'])) {
 						OR IF(LENGTH('$comment') > 0, Comment LIKE '%$comment%' , 0)
 					)";
 
+
 } // USER ENTRIES -------------------------------------------------------------
 elseif (isset($_POST['my_entries'])) {
 	$idUser = $_SESSION["userdata"]["idUser"];
@@ -63,6 +66,7 @@ if ($results->num_rows > 0) {
 	echo "<table border='1' cellspacing='5' cellpadding='4' id='resultTable' style='width:80%'>
 					<thead>
 						<tr>
+
 							<th onclick='sortTable(0)'>Name</th>
 							<th onclick='sortTable(1)'>Cell Type</th>
 							<th onclick='sortTable(2)'>Freezer name</th>
@@ -80,6 +84,7 @@ if ($results->num_rows > 0) {
 					<tbody>";
 
 	while($row = $results->fetch_assoc()) {
+
 		$idSample = $row["idSample"];
 		// GET STORAGE INFO
 		$idStorage = $row["idStorage"]; // get Owner Id for current Sample
@@ -110,6 +115,7 @@ if ($results->num_rows > 0) {
 		$table .= "<td>" . $row["Frozendate"] . "</td>";
 		$table .= "<td>" . $row["Amount"] . "</td>";
 		$table .= "<td>" . $row["Availability"] . "</td>";
+
 		$table .= "<td>" . $idOwner . "</td>";
 		$table .= "<td>" . $row["Comment"] . 	"</td>";
 		$table .=	"<td> <form name='delete_entry' action='delete.php' method='post'>
@@ -123,6 +129,15 @@ if ($results->num_rows > 0) {
 
 }
 $table .= "</ol>";
+
+// // DELETE AN ENTRY
+// if (isset($_POST['delete_entry'])) {
+// 	$queryDelete = "DELETE FROM Sample WHERE idSample = $idSample"
+// 	$
+// }
+//
+// 	//Define the query
+// 	$query = "DELETE FROM Sample WHERE idSample={$_POST['idSample']}";
 
 
 ?>
@@ -145,6 +160,7 @@ $table .= "</ol>";
 			<h2>Search Results</h2>
 			<div class="content">
 				<h4>Entries matching your Search: <?= mysqli_num_rows($results) ?></h4>
+
 				<p>Sort Entries by clicking Header</p>
 			</div>
 			<!-- RESULT TABLE -->
@@ -155,6 +171,7 @@ $table .= "</ol>";
 
 			<form action="/search.php" method="post">
 				<div class="input-group">
+
 					<button type="submit" class="btn btn-success" name"newsearch" id="newsearch" href="search.php">New Search</button>
 					<button type="submit" class="btn btn-success" name"home" id="home" formacion="/index.php">Go to Home</button>
 				</div>

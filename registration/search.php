@@ -41,14 +41,17 @@ include('server.php');
 					 <?php
 						 $sql = "Select * from Storage";
 						 $result = mysqli_query($db, $sql);
+
 						 echo "<select name='idStorage'>
 						 <option value=''></option>";
+
 						 while ($row = mysqli_fetch_array($result)) {
 								echo "<option value='" .$row['idStorage']."'> ".$row['Storagename'] . "</option>";
 						 }
 						 echo "</select>";
 							 ?>
-				 </div>
+				 </div><<<<<<< joui_branch
+				 
 
 				 <div class="input-group">
 					 <label>Position:</label>

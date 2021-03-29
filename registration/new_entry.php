@@ -52,6 +52,7 @@ if (isset($_POST['reg_storage'])) {
         mysqli_query($db, $query) or die(mysqli_error($db));
       }
 
+$t = array();
 
 
 if (isset($_POST['add_storage'])) {
@@ -63,8 +64,12 @@ if (isset($_POST['add_storage'])) {
     if(mysqli_num_rows($result_storage) >0){
           $sql = "SELECT * from Storage";
           $res_st = mysqli_query($db,$sql);
-           echo "found";
+          array_push($t,$res_st);
+                    echo "found";
+
+
     }else{
+
    //
    echo "not found";
  }}
@@ -104,13 +109,29 @@ if (isset($_POST['add_storage'])) {
               <div class="input-group">
         				<label for="idStorage">Storage:</label>
                 <?php
+
+          				echo "<select name='idStorage'><option disabled selected value> -- select an option -- </option";
+                  $t = array();
+                  echo $t;
+                  #echo "<option disabled selected value> -- select an option -- </option";
+                  foreach ($t as $row) {
+                     echo "<option value='" .$row['idStorage']."'> ".$row['Storagename'] . "</option>";
+
+                  #echo "<option value='" .$row['idStorage']."'> ".$row['Storagename'] . "</option>";
+                }
+                echo "</select>";
+           					?>
+
           				echo "<select name='idStorage'>";
                   while ($row = mysqli_fetch_array($res_st)) {
                     echo "<option value='" .$row['idStorage']."'> ".$row['Storagename'] . "</option>";
                   }
                   echo "</select>";
            				?>
+
         			</div>
+
+
 
               <!-- CREATE A FREEEZEEER -->
 							<button type="button" class="btn" data-toggle="modal" data-target="#myModal">Create Storage</button>
