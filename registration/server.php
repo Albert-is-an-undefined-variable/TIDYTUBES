@@ -7,7 +7,8 @@ $email    = "";
 $table ="";       //result table for search
 $keyword = $searchword = "";  //for simple search on index page
 $errors = array();
-$samplename = $celltype = $idfreezer = $rack = $position = $amount = $frozendate = $availability = $comment = '';
+
+$idSample = $samplename = $celltype = $idfreezer = $rack = $position = $amount = $frozendate = $availability = $idOwner = $comment = '';
 $idStorage = $storagename = $location = "";
 $errors_registration = array('username' => '', 'email' => '', 'password_1' => '', 'password_2' => '');
 // connect to the database
