@@ -4,18 +4,18 @@ include('server.php');
 // DELETE AN ENTRY
 print("<br><br><br><br>");
 echo "DIGGA WO IST DIE SCHEISS SAMPLE ID ICH KRIEG NEN ANFALL.";
+
 if(isset($_POST['delete_entry'])){
+
   print("<br><br>DELETE PUSHED");
 
-  if(isset($_POST['idSample'])) {
-    print("<br><br>idSAMPLE:");
-    print($_POST['idSample']);
-
-    $idSample = $_POST['idSample'];
-    echo "DELETE FROM Sample WHERE idSample =".$idSample;
-  } else{
-    echo "idSample not given??!!";
+  if (isset($_POST['idSample']) && !empty($_POST['idSample'])) {
+    print( $_POST['idSample']);
+    print("<br><br>GET HERE");
+  } else {
+    print("<br><br>GET HERE");
   }
+
 }else {
   echo "Did you push the delete button to get here? Don't think so. Go Back";
 }

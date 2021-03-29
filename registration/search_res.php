@@ -15,8 +15,6 @@ if (isset($_POST['simple_search'])) {
 						FROM Sample
 						WHERE ( IF (LENGTH ('$searchword') > 0, Name LIKE '%$searchword%', 0))
 						'";
-	// print("<br><br><br>");
-	// print($query);
 
 } // ADVANCED SEARCH -------------------------------------------------------------
 elseif (isset($_POST['reg_search'])) {
@@ -44,8 +42,7 @@ elseif (isset($_POST['reg_search'])) {
 						OR IF(LENGTH('$amount') > 0, Amount LIKE '%$amount%' , 0)
 						OR IF(LENGTH('$comment') > 0, Comment LIKE '%$comment%' , 0)
 					)";
-	// print("<br><br><br>");
-	// print($query);
+
 } // USER ENTRIES -------------------------------------------------------------
 elseif (isset($_POST['my_entries'])) {
 	$idUser = $_SESSION["userdata"]["idUser"];
@@ -53,7 +50,6 @@ elseif (isset($_POST['my_entries'])) {
 	$query = "SELECT *
 						FROM Sample
 						WHERE idUser = '$idUser' ";
-
 } else {
 	echo "Something went wrong! Please try again";
 };
@@ -78,7 +74,7 @@ if ($results->num_rows > 0) {
 							<th onclick='sortTable(7)'>Availability</th>
 							<th onclick='sortTable(8)'>Owner</th>
 							<th onclick='sortTable(9)'>Comment</th>
-							<th></th>
+							<th>Delete</th>
 						</tr>
 					</thead>
 					<tbody>";
@@ -103,9 +99,8 @@ if ($results->num_rows > 0) {
 		while($Owner = $resultsOwner->fetch_assoc()){
 			$idOwner = $Owner["Username"];
 		}
-		// $idSample = echo $row["idSample"];
 
-		$table .= "<tr>";
+		$table .= "<tr class='item'>";
 		$table .= "<td>" . $row["Name"] . "</td>";
 		$table .= "<td>" . $row["Cell_type"] . "</td>";
 		$table .= "<td>" . $storagename . "</td>";
@@ -117,8 +112,8 @@ if ($results->num_rows > 0) {
 		$table .= "<td>" . $row["Availability"] . "</td>";
 		$table .= "<td>" . $idOwner . "</td>";
 		$table .= "<td>" . $row["Comment"] . 	"</td>";
-		$table .=	"<td> <form action=delete.php?id method='post'>
-										<input type='submit' name='delete_entry' id='rowDelete' value='Delete' />
+		$table .=	"<td> <form name='delete_entry' action='delete.php' method='post'>
+										<input type='submit' name='delete_entry' value='Delete' />
 										<input type='hidden' name='idSample' value="; echo $row["idSample"]; "/>
 		            </form>
 		          </td>";
@@ -128,6 +123,7 @@ if ($results->num_rows > 0) {
 
 }
 $table .= "</ol>";
+
 
 ?>
 <!DOCTYPE html>
@@ -157,16 +153,22 @@ $table .= "</ol>";
 
 			</div>
 
-			<form method="post" action="search.php">
+			<form action="/search.php" method="post">
 				<div class="input-group">
-					<button class="btn btn-success" href="search.php">New advanced Search</button>
-					<button class="btn btn-success" href="index.html">Back to Home</button>
+					<button type="submit" class="btn btn-success" name"newsearch" id="newsearch" href="search.php">New Search</button>
+					<button type="submit" class="btn btn-success" name"home" id="home" formacion="/index.php">Go to Home</button>
 				</div>
 			</form>
 	</div>
+	
 	<?php include('footer.html') ?>
 
 </body>
+
+<!-- code for sorting the table
+	THIS SORTS BUT ALSO FOR UPPER AND LOWER SPACE
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+-->
 
 <script>
 function sortTable(n) {
